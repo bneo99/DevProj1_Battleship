@@ -1,8 +1,9 @@
+
+using SwinGameSDK;
 /// <summary>
 /// ''' The AIPlayer is a type of player. It can readomly deploy ships, it also has the
 /// ''' functionality to generate coordinates and shoot at tiles
 /// ''' </summary>
-
 namespace Battleship
 {
     public abstract class AIPlayer : Player
@@ -68,7 +69,7 @@ namespace Battleship
             ///         ''' <param name="this">location 1</param>
             ///         ''' <param name="other">location 2</param>
             ///         ''' <returns>true if location 1 and location 2 are at the same spot</returns>
-            public bool operator ==(Location @this, Location other)
+            public static bool operator ==(Location @this, Location other)
             {
                 return @this != null && other != null && @this.Row == other.Row && @this.Column == other.Column;
             }
@@ -79,7 +80,7 @@ namespace Battleship
             ///         ''' <param name="this">location 1</param>
             ///         ''' <param name="other">location 2</param>
             ///         ''' <returns>true if location 1 and location 2 are not at the same spot</returns>
-            public bool operator !=(Location @this, Location other)
+            public static bool operator !=(Location @this, Location other)
             {
                 return @this == null || other == null || @this.Row != other.Row || @this.Column != other.Column;
             }
@@ -123,7 +124,7 @@ namespace Battleship
                 result = _game.Shoot(row, column);
                 ProcessShot(row, column, result);
             }
-            while (result.Value != ResultOfAttack.Miss && result.Value != ResultOfAttack.GameOver && !SwinGame.WindowCloseRequested)// generate coordinates for shot// take shot
+            while (result.Value != ResultOfAttack.Miss && result.Value != ResultOfAttack.GameOver && !(SwinGame.WindowCloseRequested()))// generate coordinates for shot// take shot
     ;
 
             return result;
@@ -138,7 +139,7 @@ namespace Battleship
             for (i = 0; i <= 150; i++)
             {
                 // Dont delay if window is closed
-                if (SwinGame.WindowCloseRequested)
+                if (SwinGame.WindowCloseRequested())
                     return;
 
                 SwinGame.Delay(5);

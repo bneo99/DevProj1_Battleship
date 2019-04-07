@@ -205,7 +205,7 @@ namespace Battleship
         /// <summary>
         ///     ''' Vitual Attack allows the player to shoot
         ///     ''' </summary>
-        public virtual AttackResult Attack()
+        public virtual AttackResult Attack(int row, int col)
         {
             // human does nothing here...
             return null/* TODO Change to default(_) if this is not a reference type */;
@@ -225,14 +225,14 @@ namespace Battleship
 
             switch (result.Value)
             {
-                case object _ when ResultOfAttack.Destroyed:
-                case object _ when ResultOfAttack.Hit:
+                case ResultOfAttack.Destroyed:
+                case ResultOfAttack.Hit:
                     {
                         _hits += 1;
                         break;
                     }
 
-                case object _ when ResultOfAttack.Miss:
+                case ResultOfAttack.Miss:
                     {
                         _misses += 1;
                         break;

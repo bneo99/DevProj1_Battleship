@@ -23,7 +23,7 @@ namespace Battleship
         ///     ''' <param name="column">the column to access</param>
         ///     ''' <value>what the player can see at that location</value>
         ///     ''' <returns>what the player can see at that location</returns>
-        TileView Item { get; }
+        //TileView Item { get; }
 
         /// <summary>
         ///     ''' Mark the indicated tile as shot.
@@ -32,5 +32,9 @@ namespace Battleship
         ///     ''' <param name="col">the column of the tile</param>
         ///     ''' <returns>the result of the attack</returns>
         AttackResult HitTile(int row, int col);
+
+
+        //new shit by Chris
+        TileView Item(int row, int column);
     }
 }

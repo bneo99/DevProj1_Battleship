@@ -190,32 +190,32 @@ namespace Battleship
         {
             switch (result.Value)
             {
-                case object _ when ResultOfAttack.Miss:
+                case ResultOfAttack.Miss:
                     {
                         _CurrentTarget = null;
                         break;
                     }
 
-                case object _ when ResultOfAttack.Hit:
+                case ResultOfAttack.Hit:
                     {
                         ProcessHit(row, col);
                         break;
                     }
 
-                case object _ when ResultOfAttack.Destroyed:
+                case ResultOfAttack.Destroyed:
                     {
                         ProcessDestroy(row, col, result.Ship);
                         break;
                     }
 
-                case object _ when ResultOfAttack.ShotAlready:
+                case ResultOfAttack.ShotAlready:
                     {
                         throw new ApplicationException("Error in AI");
                         break;
                     }
             }
 
-            if (_Targets.Count == 0)
+            if (_Targets.Count() == 0)
                 _CurrentState = AIStates.Searching;
         }
 
@@ -296,7 +296,7 @@ namespace Battleship
                 _Targets.Push(t);
 
             // if the _Targets stack is 0 then change the AI's state back to searching
-            if (_Targets.Count == 0)
+            if (_Targets.Count() == 0)
                 _CurrentState = AIStates.Searching;
         }
 
@@ -362,7 +362,7 @@ namespace Battleship
 
             Target current;
 
-            while (_Targets.Count > 0)
+            while (_Targets.Count() > 0)
             {
                 current = _Targets.Pop();
                 if (current.ShotAt.Row == row || current.ShotAt.Column == column)

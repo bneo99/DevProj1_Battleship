@@ -74,7 +74,7 @@ namespace Battleship
         {
             Location l = _Targets.Pop();
 
-            if ((_Targets.Count == 0))
+            if (_Targets.Count() == 0)
                 _CurrentState = AIStates.Searching;
             row = l.Row;
             column = l.Column;
