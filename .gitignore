@@ -1,6 +1,7 @@
 .vs
 bin
 tmp
+obj
 out.log
 .DS_Store
 App.config
