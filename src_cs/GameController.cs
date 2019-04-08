@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using SwinGameSDK;
 
 /// <summary>
@@ -15,7 +16,8 @@ namespace Battleship
         private static Player _human;
         private static AIPlayer _ai;
 
-        private static Stack<GameState> _state = new Stack<GameState>();
+        private static Stack _state = new Stack();
+        //private static Stack<GameState> _state = new Stack<GameState>();
 
         private static AIOption _aiSetting;
 
@@ -29,7 +31,7 @@ namespace Battleship
         {
             get
             {
-                return _state.Peek();
+                return (GameState)_state.Peek();
             }
         }
 

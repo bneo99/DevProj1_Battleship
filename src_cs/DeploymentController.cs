@@ -8,7 +8,7 @@ using SwinGameSDK;
 
 namespace Battleship
 {
-    public class DeploymentController
+    public static class DeploymentController
     {
         private const int SHIPS_TOP = 98;
         private const int SHIPS_LEFT = 20;
@@ -31,8 +31,8 @@ namespace Battleship
 
         private const int TEXT_OFFSET = 5;
 
-        private Direction _currentDirection = Direction.UpDown;
-        private ShipName _selectedShip = ShipName.Tug;
+        private static Direction _currentDirection = Direction.UpDown;
+        private static ShipName _selectedShip = ShipName.Tug;
 
         /// <summary>
         ///     ''' Handles user input for the Deployment phase of the game.
@@ -42,7 +42,7 @@ namespace Battleship
         ///     ''' of the ships to add, randomising deployment, end then ending
         ///     ''' deployment
         ///     ''' </remarks>
-        public void HandleDeploymentInput()
+        public static void HandleDeploymentInput()
         {
             if (SwinGame.KeyTyped(KeyCode.vk_ESCAPE))
                 GameController.AddNewState(GameState.ViewingGameMenu);
@@ -84,7 +84,7 @@ namespace Battleship
         ///     ''' If the click is in the grid it deploys to the selected location
         ///     ''' with the indicated direction
         ///     ''' </remarks>
-        private void DoDeployClick()
+        private static void DoDeployClick()
         {
             Point2D mouse;
 
@@ -117,7 +117,7 @@ namespace Battleship
         ///     ''' Draws the deployment screen showing the field and the ships
         ///     ''' that the player can deploy.
         ///     ''' </summary>
-        public void DrawDeployment()
+        public static void DrawDeployment()
         {
             UtilityFunctions.DrawField(GameController.HumanPlayer.PlayerGrid, GameController.HumanPlayer, true);
 
@@ -151,7 +151,7 @@ namespace Battleship
         ///     ''' Gets the ship that the mouse is currently over in the selection panel.
         ///     ''' </summary>
         ///     ''' <returns>The ship selected or none</returns>
-        private ShipName GetShipMouseIsOver()
+        private static ShipName GetShipMouseIsOver()
         {
             foreach (ShipName sn in Enum.GetValues(typeof(ShipName)))
             {

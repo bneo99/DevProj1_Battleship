@@ -26,8 +26,9 @@ namespace Battleship
         private int x;
         private int y;
 
-        public SeaGrid()
+        public SeaGrid(Dictionary<ShipName, Ship> ships)
         {
+            _Ships = ships;
         }
 
         // '' <summary>

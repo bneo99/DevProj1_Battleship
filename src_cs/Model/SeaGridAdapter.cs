@@ -41,7 +41,7 @@ namespace Battleship
         {
             get
             {
-                TileView result = _MyGrid.Item(x, y);
+                TileView result = _MyGrid.Item;
 
                 if (result == TileView.Ship)
                     return TileView.Sea;

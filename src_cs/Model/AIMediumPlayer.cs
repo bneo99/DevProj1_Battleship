@@ -3,6 +3,7 @@
 /// ''' if it has found a ship
 /// ''' </summary>
 using System;
+using System.Collections;
 using System.Linq;
 
 namespace Battleship
@@ -21,7 +22,7 @@ namespace Battleship
         }
 
         private AIStates _CurrentState = AIStates.Searching;
-        private Stack<Location> _Targets = new Stack<Location>();
+        private Stack _Targets = new Stack();
 
         public AIMediumPlayer(BattleShipsGame controller) : base(controller)
         {
@@ -61,7 +62,7 @@ namespace Battleship
                         }
                 }
             }
-            while ((row < 0 || column < 0 || row >= EnemyGrid.Height || column >= EnemyGrid.Width || EnemyGrid.Item(row, column) != TileView.Sea)); // while inside the grid and not a sea tile do the search
+            while ((row < 0 || column < 0 || row >= EnemyGrid.Height || column >= EnemyGrid.Width || EnemyGrid.Item != TileView.Sea)); // while inside the grid and not a sea tile do the search
         }
 
         /// <summary>
@@ -72,9 +73,9 @@ namespace Battleship
         ///     ''' <param name="column">column generated around the hit tile</param>
         private void TargetCoords(ref int row, ref int column)
         {
-            Location l = _Targets.Pop();
+            Location l = (Location)_Targets.Pop();
 
-            if (_Targets.Count() == 0)
+            if (_Targets.Count == 0)
                 _CurrentState = AIStates.Searching;
             row = l.Row;
             column = l.Column;
@@ -120,7 +121,7 @@ namespace Battleship
         ///     ''' <param name="column">the column of the targets location</param>
         private void AddTarget(int row, int column)
         {
-            if (row >= 0 && column >= 0 && row < EnemyGrid.Height && column < EnemyGrid.Width && EnemyGrid.Item(row, column) == TileView.Sea)
+            if (row >= 0 && column >= 0 && row < EnemyGrid.Height && column < EnemyGrid.Width && EnemyGrid.Item == TileView.Sea)
 
                 _Targets.Push(new Location(row, column));
         }

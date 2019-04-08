@@ -125,12 +125,12 @@ namespace Battleship
                 {
                     colLeft = left + (cellGap + cellWidth) * col;
 
-                    Color fillColor;
+                    Color fillColor = SMALL_SEA;
                     bool draw;
 
                     draw = true;
 
-                    switch (grid.Item(row, col))
+                    switch (grid.Item)
                     {
                         case TileView.Ship:
                             {

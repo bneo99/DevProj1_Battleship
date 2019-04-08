@@ -6,6 +6,7 @@
 /// ''' that have been hit.
 /// ''' </summary>
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -104,7 +105,8 @@ namespace Battleship
         }
 
         private AIStates _CurrentState = AIStates.Searching;
-        private Stack<Target> _Targets = new Stack<Target>();
+        private Stack _Targets = new Stack();
+        //private Stack<Target> _Targets = new Stack<Target>();
         private List<Target> _LastHit = new List<Target>();
         private Target _CurrentTarget;
 
@@ -148,7 +150,7 @@ namespace Battleship
                         }
                 }
             }
-            while ((row < 0 || column < 0 || row >= EnemyGrid.Height || column >= EnemyGrid.Width || EnemyGrid.Item(row, column) != TileView.Sea)); // while inside the grid and not a sea tile do the search
+            while ((row < 0 || column < 0 || row >= EnemyGrid.Height || column >= EnemyGrid.Width || EnemyGrid.Item != TileView.Sea)); // while inside the grid and not a sea tile do the search
         }
 
         /// <summary>
@@ -160,7 +162,7 @@ namespace Battleship
         private void TargetCoords(ref int row, ref int column)
         {
             Target t;
-            t = _Targets.Pop();
+            t = (Target)_Targets.Pop();
 
             row = t.ShotAt.Row;
             column = t.ShotAt.Column;
@@ -215,7 +217,7 @@ namespace Battleship
                     }
             }
 
-            if (_Targets.Count() == 0)
+            if (_Targets.Count == 0)
                 _CurrentState = AIStates.Searching;
         }
 
@@ -278,7 +280,7 @@ namespace Battleship
         ///     ''' <param name="toRemove"></param>
         private void RemoveShotsAround(Location toRemove)
         {
-            Stack<Target> newStack = new Stack<Target>();  // create a new stack
+            Stack newStack = new Stack();  // create a new stack
 
             // check all targets in the _Targets stack
             foreach (Target t in _Targets)
@@ -296,7 +298,7 @@ namespace Battleship
                 _Targets.Push(t);
 
             // if the _Targets stack is 0 then change the AI's state back to searching
-            if (_Targets.Count() == 0)
+            if (_Targets.Count == 0)
                 _CurrentState = AIStates.Searching;
         }
 
@@ -357,14 +359,14 @@ namespace Battleship
         ///     ''' <param name="column">the column of the optimisation</param>
         private void MoveToTopOfStack(int row, int column)
         {
-            Stack<Target> _NoMatch = new Stack<Target>();
-            Stack<Target> _Match = new Stack<Target>();
+            Stack _NoMatch = new Stack();
+            Stack _Match = new Stack();
 
             Target current;
 
-            while (_Targets.Count() > 0)
+            while (_Targets.Count > 0)
             {
-                current = _Targets.Pop();
+                current = (Target)_Targets.Pop();
                 if (current.ShotAt.Row == row || current.ShotAt.Column == column)
                     _Match.Push(current);
                 else
@@ -384,7 +386,7 @@ namespace Battleship
         ///     ''' <param name="column">the column of the targets location</param>
         private void AddTarget(int row, int column)
         {
-            if ((row >= 0 && column >= 0 && row < EnemyGrid.Height && column < EnemyGrid.Width && EnemyGrid.Item(row, column) == TileView.Sea))
+            if ((row >= 0 && column >= 0 && row < EnemyGrid.Height && column < EnemyGrid.Width && EnemyGrid.Item == TileView.Sea))
 
                 _Targets.Push(new Target(new Location(row, column), _CurrentTarget.ShotAt));
         }

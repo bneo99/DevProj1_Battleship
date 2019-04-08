@@ -7,12 +7,12 @@ using System.Collections.Generic;
 
 namespace Battleship
 {
-    public class Player : IEnumerable<Ship>
+    public class Player 
     {
         protected Random _Random = new Random();
 
         private Dictionary<ShipName, Ship> _Ships = new Dictionary<ShipName, Ship>();
-        private SeaGrid _playerGrid = new SeaGrid(_Ships);
+        private SeaGrid _playerGrid;
         private ISeaGrid _enemyGrid;
         protected BattleShipsGame _game;
 
@@ -51,6 +51,7 @@ namespace Battleship
 
         public Player(BattleShipsGame controller)
         {
+            _playerGrid = new SeaGrid(_Ships);
             _game = controller;
 
             // for each ship add the ships name so the seagrid knows about them
@@ -116,15 +117,12 @@ namespace Battleship
         ///     ''' <value>The ship</value>
         ///     ''' <returns>The ship with the indicated name</returns>
         ///     ''' <remarks>The none ship returns nothing/null</remarks>
-        public Ship Ship
+        public Ship Ship(ShipName name)
         {
-            get
-            {
-                if (name == ShipName.None)
-                    return null/* TODO Change to default(_) if this is not a reference type */;
+            if (name == ShipName.None)
+                return null/* TODO Change to default(_) if this is not a reference type */;
 
-                return _Ships.Item[name];
-            }
+            return _Ships[name];
         }
 
         /// <summary>
@@ -192,7 +190,7 @@ namespace Battleship
         ///     ''' has.
         ///     ''' </summary>
         ///     ''' <returns>A Ship enumerator</returns>
-        public IEnumerator GetEnumerator()
+        public IEnumerator<Ship> GetEnumerator()
         {
             Ship[] result = new Ship[_Ships.Values.Count + 1];
             _Ships.Values.CopyTo(result, 0);
@@ -204,8 +202,10 @@ namespace Battleship
 
         /// <summary>
         ///     ''' Vitual Attack allows the player to shoot
-        ///     ''' </summary>
-        public virtual AttackResult Attack(int row, int col)
+        ///     </summary>
+        
+        //public virtual AttackResult Attack(int row, int col)
+        public virtual AttackResult Attack()
         {
             // human does nothing here...
             return null/* TODO Change to default(_) if this is not a reference type */;

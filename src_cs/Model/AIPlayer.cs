@@ -19,6 +19,17 @@ namespace Battleship
             private int _Column;
 
             /// <summary>
+            ///         ''' Sets the last hit made to the local variables
+            ///         ''' </summary>
+            ///         ''' <param name="row">the row of the location</param>
+            ///         ''' <param name="column">the column of the location</param>
+            public Location(int row, int column)
+            {
+                _Column = column;
+                _Row = row;
+            }
+
+            /// <summary>
             ///         ''' The row of the shot
             ///         ''' </summary>
             ///         ''' <value>The row of the shot</value>
@@ -50,17 +61,6 @@ namespace Battleship
                 {
                     _Column = value;
                 }
-            }
-
-            /// <summary>
-            ///         ''' Sets the last hit made to the local variables
-            ///         ''' </summary>
-            ///         ''' <param name="row">the row of the location</param>
-            ///         ''' <param name="column">the column of the location</param>
-            public Location(int row, int column)
-            {
-                _Column = column;
-                _Row = row;
             }
 
             /// <summary>

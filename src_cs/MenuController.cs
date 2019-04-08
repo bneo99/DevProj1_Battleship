@@ -8,7 +8,7 @@ using SwinGameSDK;
 
 namespace Battleship
 {
-    public class MenuController
+    public static class MenuController
     {
 
         /// <summary>
@@ -17,7 +17,7 @@ namespace Battleship
         ///     ''' <remarks>
         ///     ''' These are the text captions for the menu items.
         ///     ''' </remarks>
-        private readonly string[][] _menuStructure = new[] { new string[] { "PLAY", "SETUP", "SCORES", "QUIT" }, new string[] { "RETURN", "SURRENDER", "QUIT" }, new string[] { "EASY", "MEDIUM", "HARD" } };
+        private static readonly string[][] _menuStructure = new[] { new string[] { "PLAY", "SETUP", "SCORES", "QUIT" }, new string[] { "RETURN", "SURRENDER", "QUIT" }, new string[] { "EASY", "MEDIUM", "HARD" } };
 
         private const int MENU_TOP = 575;
         private const int MENU_LEFT = 30;
@@ -45,13 +45,13 @@ namespace Battleship
         private const int GAME_MENU_SURRENDER_BUTTON = 1;
         private const int GAME_MENU_QUIT_BUTTON = 2;
 
-        private readonly Color MENU_COLOR = SwinGame.RGBAColor(2, 167, 252, 255);
-        private readonly Color HIGHLIGHT_COLOR = SwinGame.RGBAColor(1, 57, 86, 255);
+        private static readonly Color MENU_COLOR = SwinGame.RGBAColor(2, 167, 252, 255);
+        private static readonly Color HIGHLIGHT_COLOR = SwinGame.RGBAColor(1, 57, 86, 255);
 
         /// <summary>
         ///     ''' Handles the processing of user input when the main menu is showing
         ///     ''' </summary>
-        public void HandleMainMenuInput()
+        public static void HandleMainMenuInput()
         {
             HandleMenuInput(MAIN_MENU, 0, 0);
         }
@@ -59,7 +59,7 @@ namespace Battleship
         /// <summary>
         ///     ''' Handles the processing of user input when the main menu is showing
         ///     ''' </summary>
-        public void HandleSetupMenuInput()
+        public static void HandleSetupMenuInput()
         {
             bool handled;
             handled = HandleMenuInput(SETUP_MENU, 1, 1);
@@ -74,7 +74,7 @@ namespace Battleship
         ///     ''' <remarks>
         ///     ''' Player can return to the game, surrender, or quit entirely
         ///     ''' </remarks>
-        public void HandleGameMenuInput()
+        public static void HandleGameMenuInput()
         {
             HandleMenuInput(GAME_MENU, 0, 0);
         }
@@ -86,7 +86,7 @@ namespace Battleship
         ///     ''' <param name="level">the vertical level of the menu</param>
         ///     ''' <param name="xOffset">the xoffset of the menu</param>
         ///     ''' <returns>false if a clicked missed the buttons. This can be used to check prior menus.</returns>
-        private bool HandleMenuInput(int menu, int level, int xOffset)
+        private static bool HandleMenuInput(int menu, int level, int xOffset)
         {
             if (SwinGame.KeyTyped(KeyCode.vk_ESCAPE))
             {
@@ -118,7 +118,7 @@ namespace Battleship
         /// <summary>
         ///     ''' Draws the main menu to the screen.
         ///     ''' </summary>
-        public void DrawMainMenu()
+        public static void DrawMainMenu()
         {
             // Clears the Screen to Black
             // SwinGame.DrawText("Main Menu", Color.White, GameFont("ArialLarge"), 50, 50)
@@ -129,7 +129,7 @@ namespace Battleship
         /// <summary>
         ///     ''' Draws the Game menu to the screen
         ///     ''' </summary>
-        public void DrawGameMenu()
+        public static void DrawGameMenu()
         {
             // Clears the Screen to Black
             // SwinGame.DrawText("Paused", Color.White, GameFont("ArialLarge"), 50, 50)
@@ -143,7 +143,7 @@ namespace Battleship
         ///     ''' <remarks>
         ///     ''' Also shows the main menu
         ///     ''' </remarks>
-        public void DrawSettings()
+        public static void DrawSettings()
         {
             // Clears the Screen to Black
             // SwinGame.DrawText("Settings", Color.White, GameFont("ArialLarge"), 50, 50)
@@ -156,7 +156,7 @@ namespace Battleship
         ///     ''' Draw the buttons associated with a top level menu.
         ///     ''' </summary>
         ///     ''' <param name="menu">the index of the menu to draw</param>
-        private void DrawButtons(int menu)
+        private static void DrawButtons(int menu)
         {
             DrawButtons(menu, 0, 0);
         }
@@ -172,7 +172,7 @@ namespace Battleship
         ///     ''' of the menu, to enable sub menus. The xOffset repositions the menu horizontally
         ///     ''' to allow the submenus to be positioned correctly.
         ///     ''' </remarks>
-        private void DrawButtons(int menu, int level, int xOffset)
+        private static void DrawButtons(int menu, int level, int xOffset)
         {
             int btnTop;
 
@@ -183,7 +183,7 @@ namespace Battleship
                 int btnLeft;
                 btnLeft = MENU_LEFT + BUTTON_SEP * (i + xOffset);
                 // SwinGame.FillRectangle(Color.White, btnLeft, btnTop, BUTTON_WIDTH, BUTTON_HEIGHT)
-                SwinGame.DrawTextLines(_menuStructure[menu](i), MENU_COLOR, Color.Black, GameResources.GameFont("Menu"), FontAlignment.AlignCenter, btnLeft + TEXT_OFFSET, btnTop + TEXT_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT);
+                SwinGame.DrawTextLines(_menuStructure[menu][i], MENU_COLOR, Color.Black, GameResources.GameFont("Menu"), FontAlignment.AlignCenter, btnLeft + TEXT_OFFSET, btnTop + TEXT_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT);
 
                 if (SwinGame.MouseDown(MouseButton.LeftButton) & IsMouseOverMenu(i, level, xOffset))
                     SwinGame.DrawRectangle(HIGHLIGHT_COLOR, btnLeft, btnTop, BUTTON_WIDTH, BUTTON_HEIGHT);

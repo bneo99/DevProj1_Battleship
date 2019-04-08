@@ -42,8 +42,8 @@ namespace Battleship
 
             if (row >= 0 & row < GameController.HumanPlayer.EnemyGrid.Height)
             {
-                if (col >= 0 & col < GameController.HumanPlayer.EnemyGrid.Width)
-                    Player.Attack(row, col);
+                if (col >= 0 & col < GameController.HumanPlayer.EnemyGrid.Width) { }
+                    //Player.Attack(row, col);
             }
         }
 
