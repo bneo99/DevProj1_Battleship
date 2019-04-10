@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Battleship
 {
-    public class Player 
+    public class Player
     {
         protected Random _Random = new Random();
 
@@ -120,7 +120,7 @@ namespace Battleship
         public Ship Ship(ShipName name)
         {
             if (name == ShipName.None)
-                return null/* TODO Change to default(_) if this is not a reference type */;
+                return null; /* TODO Change to default(_) if this is not a reference type */
 
             return _Ships[name];
         }
@@ -208,7 +208,7 @@ namespace Battleship
         public virtual AttackResult Attack()
         {
             // human does nothing here...
-            return null/* TODO Change to default(_) if this is not a reference type */;
+            return null; /* TODO Change to default(_) if this is not a reference type */
         }
 
         /// <summary>

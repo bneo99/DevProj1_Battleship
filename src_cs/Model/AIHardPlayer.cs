@@ -131,26 +131,22 @@ namespace Battleship
                 switch (_CurrentState)
                 {
                     case AIStates.Searching:
-                        {
+                    {
                             SearchCoords(ref row, ref column);
                             break;
-                        }
-
+                    }
                     case AIStates.TargetingShip:
                     case AIStates.HittingShip:
-                        {
+                    {
                             TargetCoords(ref row, ref column);
                             break;
-                        }
-
+                    }
                     default:
-                        {
+                    {
                             throw new ApplicationException("AI has gone in an invalid state");
-                            break;
-                        }
+                    }
                 }
-            }
-            while ((row < 0 || column < 0 || row >= EnemyGrid.Height || column >= EnemyGrid.Width || EnemyGrid.Item != TileView.Sea)); // while inside the grid and not a sea tile do the search
+            }while ((row < 0 || column < 0 || row >= EnemyGrid.Height || column >= EnemyGrid.Width || EnemyGrid[row, column] != TileView.Sea)); // while inside the grid and not a sea tile do the search
         }
 
         /// <summary>
@@ -178,7 +174,7 @@ namespace Battleship
         {
             row = _Random.Next(0, EnemyGrid.Height);
             column = _Random.Next(0, EnemyGrid.Width);
-            _CurrentTarget = new Target(new Location(row, column), null/* TODO Change to default(_) if this is not a reference type */);
+            _CurrentTarget = new Target(new Location(row, column), null); /* TODO Change to default(_) if this is not a reference type */
         }
 
         /// <summary>
@@ -193,28 +189,24 @@ namespace Battleship
             switch (result.Value)
             {
                 case ResultOfAttack.Miss:
-                    {
-                        _CurrentTarget = null;
-                        break;
-                    }
-
+                {
+                    _CurrentTarget = null;
+                    break;
+                }
                 case ResultOfAttack.Hit:
-                    {
-                        ProcessHit(row, col);
-                        break;
-                    }
-
+                {
+                    ProcessHit(row, col);
+                    break;
+                }
                 case ResultOfAttack.Destroyed:
-                    {
-                        ProcessDestroy(row, col, result.Ship);
-                        break;
-                    }
-
+                {
+                    ProcessDestroy(row, col, result.Ship);
+                    break;
+                }
                 case ResultOfAttack.ShotAlready:
-                    {
-                        throw new ApplicationException("Error in AI");
-                        break;
-                    }
+                {
+                    throw new ApplicationException("Error in AI");
+                }
             }
 
             if (_Targets.Count == 0)
@@ -230,6 +222,7 @@ namespace Battleship
         ///     ''' <param name="ship">the row that was shot at and destroyed</param>
         private void ProcessDestroy(int row, int col, Ship ship)
         {
+            //may have problems
             bool foundOriginal;
             Location source;
             Target current;
@@ -247,7 +240,9 @@ namespace Battleship
                     // Source is nnothing if the ship was originally hit in
                     // the middle. This then searched forward, rather than
                     // backward through the list of targets
-                    if (source == null)
+
+                    //PROBLEM HERE CHRIS
+                    if (ReferenceEquals(source, null))
                     {
                         source = current.ShotAt;
                         foundOriginal = true;
@@ -259,7 +254,7 @@ namespace Battleship
                 // find the source in _LastHit
                 foreach (Target t in _LastHit)
                 {
-                    if ((!foundOriginal && t.ShotAt == source) || (foundOriginal & t.Source == source))
+                    if ((!foundOriginal && t.ShotAt == source) || (foundOriginal && t.Source == source))
                     {
                         current = t;
                         _LastHit.Remove(t);
@@ -386,7 +381,7 @@ namespace Battleship
         ///     ''' <param name="column">the column of the targets location</param>
         private void AddTarget(int row, int column)
         {
-            if ((row >= 0 && column >= 0 && row < EnemyGrid.Height && column < EnemyGrid.Width && EnemyGrid.Item == TileView.Sea))
+            if ((row >= 0 && column >= 0 && row < EnemyGrid.Height && column < EnemyGrid.Width && EnemyGrid[row,column] == TileView.Sea))
 
                 _Targets.Push(new Target(new Location(row, column), _CurrentTarget.ShotAt));
         }

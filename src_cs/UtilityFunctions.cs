@@ -56,10 +56,10 @@ namespace Battleship
             mouse = SwinGame.MousePosition();
 
             // if the mouse is inline with the button horizontally
-            if (mouse.X >= x & mouse.X <= x + w)
+            if ((mouse.X >= x) && (mouse.X <= x + w))
             {
                 // Check vertical position
-                if (mouse.Y >= y & mouse.Y <= y + h)
+                if ((mouse.Y >= y) && (mouse.Y <= y + h))
                     result = true;
             }
 
@@ -130,7 +130,7 @@ namespace Battleship
 
                     draw = true;
 
-                    switch (grid.Item)
+                    switch (grid[row, col])
                     {
                         case TileView.Ship:
                             {

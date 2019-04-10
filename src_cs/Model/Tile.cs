@@ -117,12 +117,14 @@ namespace Battleship
                         return TileView.Sea;
                 }
                 else
+                {
                     // if there is a ship and it has been hit
                     if ((_Shot))
-                    return TileView.Hit;
-                else
-                    // if there is a ship and it hasn't been hit
-                    return TileView.Ship;
+                        return TileView.Hit;
+                    else
+                        // if there is a ship and it hasn't been hit
+                        return TileView.Ship;
+                }
             }
         }
 

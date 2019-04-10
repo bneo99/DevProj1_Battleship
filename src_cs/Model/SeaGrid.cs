@@ -16,18 +16,29 @@ namespace Battleship
 
         private const int _WIDTH = 10;
         private const int _HEIGHT = 10;
-        private Tile[,] _GameTiles = new Tile[_WIDTH - 1 + 1, _HEIGHT - 1 + 1];
+
+        private Tile[,] _GameTiles; //Chris = new Tile[_WIDTH - 1 + 1, _HEIGHT - 1 + 1];
 
         private Dictionary<ShipName, Ship> _Ships;
 
         private int _ShipsKilled = 0;
 
-        //added Chris
-        private int x;
-        private int y;
-
         public SeaGrid(Dictionary<ShipName, Ship> ships)
         {
+            //Chris
+            _GameTiles = new Tile[Width, Height];
+
+            // fill array with empty Tiles
+            int i;
+            for (i = 0; i <= (Width - 1); i++)
+            {
+                for (int j = 0; j <= (Height - 1); j++)
+                {
+                    _GameTiles[i, j] = new Tile(i, j, null);
+                }
+
+            }
+
             _Ships = ships;
         }
 
@@ -79,7 +90,7 @@ namespace Battleship
         /// <param name="x">x coordinate of the tile</param>
         /// <param name="y">y coordiante of the tile</param>
         /// <returns></returns>
-        public TileView Item
+        public TileView this[int x, int y]
         {
             get
             {
@@ -107,7 +118,8 @@ namespace Battleship
             }
         }
 
-        public void DummyClass(Dictionary<ShipName, Ship> ships)
+        // just a dummy class
+        /*public void DummyClass(Dictionary<ShipName, Ship> ships)
         {
             // fill array with empty Tiles
             int i;
@@ -117,7 +129,7 @@ namespace Battleship
                 for (int j = 0; (j
                             <= (Height - 1)); j++)
                 {
-                    _GameTiles[x, y] = new Tile(i, j, null);
+                    _GameTiles[i, j] = new Tile(i, j, null);
                 }
 
             }
@@ -126,7 +138,7 @@ namespace Battleship
 
             //Chris
             return;
-        }
+        }*/
 
         // '' <summary>
         // '' MoveShips allows for ships to be placed on the seagrid
@@ -171,18 +183,17 @@ namespace Battleship
 
                 // place ship's tiles in array and into ship object
                 int i;
-                for (i = 0; (i
-                            <= (size - 1)); i++)
+                for (i = 0; i <= size - 1; i++)
                 {
-                    if (((currentRow < 0)
-                                || ((currentRow >= Width)
-                                || ((currentCol < 0)
-                                || (currentCol >= Height)))))
+                    if ((currentRow < 0) || (currentRow >= Width) || (currentCol < 0) || (currentCol >= Height))
                     {
                         throw new InvalidOperationException("Ship can\'t fit on the board");
                     }
 
+                    //problem occurs here Chris - solved?
+                    //now after that the size of ship does not change - solved
                     _GameTiles[currentRow, currentCol].Ship = newShip;
+
                     currentCol = (currentCol + dCol);
                     currentRow = (currentRow + dRow);
                 }
@@ -197,7 +208,8 @@ namespace Battleship
             }
             finally
             {
-                Changed(this, EventArgs.Empty);
+                //this made it work
+                Changed?.Invoke(this, EventArgs.Empty);
             }
 
         }
@@ -222,8 +234,9 @@ namespace Battleship
                 }
 
                 _GameTiles[row, col].Shoot();
+
                 // there is no ship on the tile
-                if ((_GameTiles[row, col].Ship == null))
+                if (_GameTiles[row, col].Ship == null)
                 {
                     return new AttackResult(ResultOfAttack.Miss, "missed", row, col);
                 }
@@ -241,7 +254,7 @@ namespace Battleship
             }
             finally
             {
-                Changed(this, EventArgs.Empty);
+                Changed?.Invoke(this, EventArgs.Empty);
             }
 
         }
