@@ -150,6 +150,10 @@ namespace Battleship
             EndLoadingScreen(width, height);
         }
 
+        /// <summary>
+        ///     ''' Shows the loading screen
+        ///     ''' </summary>
+
         private static void ShowLoadingScreen()
         {
             _Background = SwinGame.LoadBitmap(SwinGame.PathToResource("SplashBack.png", ResourceKind.BitmapResource));
@@ -166,6 +170,10 @@ namespace Battleship
 
             PlaySwinGameIntro();
         }
+
+        /// <summary>
+        /// Plays the SwinGame Intro before Game Starts
+        /// </summary>
 
         private static void PlaySwinGameIntro()
         {
@@ -192,6 +200,12 @@ namespace Battleship
             SwinGame.Delay(1500);
         }
 
+        /// <summary>
+        /// Shows the messages
+        /// </summary>
+        /// <param name="message">The message to be shown</param>
+        /// <param name="number">Length of the message</param>
+
         private static void ShowMessage(string message, int number)
         {
             const int TX = 310;
@@ -214,6 +228,12 @@ namespace Battleship
             SwinGame.ProcessEvents();
         }
 
+        /// <summary>
+        /// Ending loading screen
+        /// </summary>
+        /// <param name="width">Width of window</param>
+        /// <param name="height">Height of window</param>
+
         private static void EndLoadingScreen(int width, int height)
         {
             SwinGame.ProcessEvents();
@@ -229,35 +249,78 @@ namespace Battleship
             SwinGame.ChangeScreenSize(width, height);
         }
 
+        /// <summary>
+        /// New fonts to be used in game
+        /// </summary>
+        /// <param name="fontName">Font name</param>
+        /// <param name="filename">Location of font file</param>
+        /// <param name="size">Size of font file</param>
+
         private static void NewFont(string fontName, string filename, int size)
         {
             _Fonts.Add(fontName, SwinGame.LoadFont(SwinGame.PathToResource(filename, ResourceKind.FontResource), size));
         }
+
+        /// <summary>
+        /// New images to be used in game
+        /// </summary>
+        /// <param name="imageName">Image name</param>
+        /// <param name="filename">Name of the file</param>
 
         private static void NewImage(string imageName, string filename)
         {
             _Images.Add(imageName, SwinGame.LoadBitmap(SwinGame.PathToResource(filename, ResourceKind.BitmapResource)));
         }
 
+        /// <summary>
+        /// New Transparent Color Image to be used in game
+        /// </summary>
+        /// <param name="imageName">Image name</param>
+        /// <param name="filename">Name of the file</param>
+        /// <param name="transColor">Color of transparency</param>
+
         private static void NewTransparentColorImage(string imageName, string fileName, Color transColor)
         {
             _Images.Add(imageName, SwinGame.LoadBitmap(SwinGame.PathToResource(fileName, ResourceKind.BitmapResource), true, transColor));
         }
+
+        /// <summary>
+        /// Creating new object of its own
+        /// </summary>
+        /// <param name="imageName">Image name</param>
+        /// <param name="filename">Name of the file</param>
+        /// <param name="transColor">Color of transparency</param>
 
         private static void NewTransparentColourImage(string imageName, string fileName, Color transColor)
         {
             NewTransparentColorImage(imageName, fileName, transColor);
         }
 
+        /// <summary>
+        /// New Sound to be used in game
+        /// </summary>
+        /// <param name="soundName">Sound name</param>
+        /// <param name="filename">Name of the file</param>
+
         private static void NewSound(string soundName, string filename)
         {
             _Sounds.Add(soundName, Audio.LoadSoundEffect(SwinGame.PathToResource(filename, ResourceKind.SoundResource)));
         }
 
+        /// <summary>
+        /// New Sound to be used in game
+        /// </summary>
+        /// <param name="soundName">Sound name</param>
+        /// <param name="filename">Name of the file</param>
+
         private static void NewMusic(string musicName, string filename)
         {
             _Music.Add(musicName, Audio.LoadMusic(SwinGame.PathToResource(filename, ResourceKind.SoundResource)));
         }
+
+        /// <summary>
+        /// Unload fonts from memory
+        /// </summary>
 
         private static void FreeFonts()
         {
@@ -265,11 +328,19 @@ namespace Battleship
                 SwinGame.FreeFont(obj);
         }
 
+        /// <summary>
+        /// Unload images from memory
+        /// </summary>
+
         private static void FreeImages()
         {
             foreach (Bitmap obj in _Images.Values)
                 SwinGame.FreeBitmap(obj);
         }
+
+        /// <summary>
+        /// Unload sounds from memory
+        /// </summary>
 
         private static void FreeSounds()
         {
@@ -277,11 +348,19 @@ namespace Battleship
                 Audio.FreeSoundEffect(obj);
         }
 
+        /// <summary>
+        /// Unload musics from memory
+        /// </summary>
+
         private static void FreeMusic()
         {
             foreach (Music obj in _Music.Values)
                 Audio.FreeMusic(obj);
         }
+
+        /// <summary>
+        /// Unload all the resources in just one method
+        /// </summary>
 
         public static void FreeResources()
         {

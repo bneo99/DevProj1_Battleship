@@ -1,5 +1,8 @@
 namespace Battleship
 {
+    /// <summary>
+    /// Enumerator for the ship names
+    /// </summary>
     public enum ShipName
     {
         None = 0,

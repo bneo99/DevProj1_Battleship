@@ -129,7 +129,7 @@ namespace Battleship
         ///     ''' The number of shots the player has made
         ///     ''' </summary>
         ///     ''' <value>shots taken</value>
-        ///     ''' <returns>teh number of shots taken</returns>
+        ///     ''' <returns>the number of shots taken</returns>
         public int Shots
         {
             get
@@ -138,6 +138,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// The number of hits the player has made
+        /// </summary>
+        /// <value>hits taken</value>
+        /// <returns>the number of hits taken</returns>
         public int Hits
         {
             get
@@ -159,6 +164,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// The score of player
+        /// </summary>
+        /// <value>score</value>
+        /// <returns>the score player earns</returns>
         public int Score
         {
             get
@@ -242,6 +252,9 @@ namespace Battleship
             return result;
         }
 
+        /// <summary>
+        /// Randomize the deployments of ships
+        /// </summary>
         public virtual void RandomizeDeployment()
         {
             bool placementSuccessful;

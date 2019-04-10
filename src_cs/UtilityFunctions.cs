@@ -279,18 +279,37 @@ namespace Battleship
             SwinGame.DrawFramerate(675, 585, GameResources.GameFont("CourierSmall"));
         }
 
+        /// <summary>
+        /// Add explosion animation to specific row and col
+        /// </summary>
+        /// <param name="row">the row of hit ship</param>
+        /// <param name="col">the column of hit ship</param>
         public static void AddExplosion(int row, int col)
         {
             AddAnimation(row, col, "Splash");
         }
 
+        /// <summary>
+        /// Add splash animation to specific row and col
+        /// </summary>
+        /// <param name="row">the row of missed ship</param>
+        /// <param name="col">the column of missed ship</param>
         public static void AddSplash(int row, int col)
         {
             AddAnimation(row, col, "Splash");
         }
 
+        /// <summary>
+        ///  List of Sprite created to store _Animations
+        /// </summary>
         private static List<Sprite> _Animations = new List<Sprite>();
 
+        /// <summary>
+        /// Add in Animations
+        /// </summary>
+        /// <param name="row">row of the animation to be placed</param>
+        /// <param name="col">column of the animation to be placed</param>
+        /// <param name="image">put in image to be used</param>
         private static void AddAnimation(int row, int col, string image)
         {
             Sprite s;
@@ -310,6 +329,9 @@ namespace Battleship
             _Animations.Add(s);
         }
 
+        /// <summary>
+        /// Update the animations
+        /// </summary>
         public static void UpdateAnimations()
         {
             List<Sprite> ended = new List<Sprite>();
@@ -327,12 +349,18 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// Draws the animations
+        /// </summary>
         public static void DrawAnimations()
         {
             foreach (Sprite s in _Animations)
                 SwinGame.DrawSprite(s);
         }
 
+        /// <summary>
+        /// Draws the animation sequences
+        /// </summary>
         public static void DrawAnimationSequence()
         {
             int i;

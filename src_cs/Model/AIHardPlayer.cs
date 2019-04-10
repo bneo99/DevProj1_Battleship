@@ -241,7 +241,7 @@ namespace Battleship
                     // the middle. This then searched forward, rather than
                     // backward through the list of targets
 
-                    //PROBLEM HERE CHRIS
+                    //PROBLEM HERE CHRIS - solved
                     if (ReferenceEquals(source, null))
                     {
                         source = current.ShotAt;

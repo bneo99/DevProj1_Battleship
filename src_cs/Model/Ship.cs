@@ -76,6 +76,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        ///     ''' The column location of the ship
+        ///     ''' </summary>
+        ///     ''' <value>The location of the ship</value>
+        ///     ''' <returns>the column of the ship</returns>
         public int Column
         {
             get
@@ -84,6 +89,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        ///     ''' The direction of ship
+        ///     ''' </summary>
+        ///     ''' <value>The direction of the ship</value>
+        ///     ''' <returns>the direction of the ship</returns>
         public Direction Direction
         {
             get
@@ -92,6 +102,11 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// Ship constructor
+        /// create new ship object
+        /// </summary>
+        /// <param name="ship">Ship used</param>
         public Ship(ShipName ship)
         {
             _shipName = ship;
@@ -138,6 +153,9 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        ///     ''' IsDestroyed returns if the ships is destroyed, if its equal to size of ship
+        ///     ''' </summary>
         public bool IsDestroyed
         {
             get

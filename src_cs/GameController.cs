@@ -130,6 +130,13 @@ namespace Battleship
             SwinGame.RefreshScreen();
         }
 
+        /// <summary>
+        ///     ''' Play sound effects
+        ///     ''' when player hits enemy ship
+        ///     ''' </summary>
+        ///     ''' <param name="row">The row of the hit ship</param>
+        ///     ''' <param name="column">The column of the hit ship</param>
+        ///     ''' <param name="showAnimation">Boolean value to determine whether the ship is hit</param>
         private static void PlayHitSequence(int row, int column, bool showAnimation)
         {
             if (showAnimation)
@@ -140,6 +147,13 @@ namespace Battleship
             UtilityFunctions.DrawAnimationSequence();
         }
 
+        /// <summary>
+        ///     ''' Play sound effects
+        ///     ''' when player misses enemy ship
+        ///     ''' </summary>
+        ///     ''' <param name="row">The row of the hit ship</param>
+        ///     ''' <param name="column">The column of the hit ship</param>
+        ///     ''' <param name="showAnimation">Boolean value to determine whether the ship is missed</param>
         private static void PlayMissSequence(int row, int column, bool showAnimation)
         {
             if (showAnimation)
