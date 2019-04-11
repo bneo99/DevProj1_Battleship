@@ -77,7 +77,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="lib\cygpath" />
     <None Include="lib\godly\libSGSDK.dylib" />
     <None Include="lib\mac\libSGSDK.dylib" />
