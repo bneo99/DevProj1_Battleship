@@ -118,7 +118,13 @@ namespace Battleship
             }
         }
 
-        // just a dummy class
+        /// <summary>
+        /// Just a dummy class
+        /// </summary>
+        /// <param name="row">row of ship</param>
+        /// <param name="col">column of ship</param>
+        /// <param name="ship">ship name</param>
+        /// <param name="direction">direction of ship</param>
         /*public void DummyClass(Dictionary<ShipName, Ship> ships)
         {
             // fill array with empty Tiles
