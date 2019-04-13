@@ -95,7 +95,7 @@ namespace Battleship
             }
             else
             {
-                _ai = new AIHardPlayer(_theGame);
+                _ai = new AIPlayer(_theGame);
             }
 
             _human = new Player(_theGame);

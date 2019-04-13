@@ -1,12 +1,12 @@
 
 using SwinGameSDK;
 /// <summary>
-/// ''' The AIPlayer is a type of player. It can readomly deploy ships, it also has the
+/// ''' The AIPlayer is a type of player. It can randomly deploy ships, it also has the
 /// ''' functionality to generate coordinates and shoot at tiles
 /// ''' </summary>
 namespace Battleship
 {
-    public abstract class AIPlayer : Player
+    public class AIPlayer : Player
     {
 
         /// <summary>
@@ -113,7 +113,16 @@ namespace Battleship
         ///     ''' </summary>
         ///     ''' <param name="row">output the row for the next shot</param>
         ///     ''' <param name="column">output the column for the next show</param>
-        protected abstract void GenerateCoords(ref int row, ref int column);
+        protected virtual void GenerateCoords(ref int row, ref int column)
+        {
+            do
+            {
+                // choose a random tile (taken from AIMediumPlayer)
+                row = _Random.Next(0, EnemyGrid.Height);
+                column = _Random.Next(0, EnemyGrid.Width);
+            }
+            while ((row < 0 || column < 0 || row >= EnemyGrid.Height || column >= EnemyGrid.Width || EnemyGrid[row, column] != TileView.Sea)); // while inside the grid and not a sea tile do the search
+        }
 
         /// <summary>
         ///     ''' The last shot had the following result. Child classes can use this
@@ -122,7 +131,7 @@ namespace Battleship
         ///     ''' <param name="result">The result of the shot</param>
         ///     ''' <param name="row">the row shot</param>
         ///     ''' <param name="col">the column shot</param>
-        protected abstract void ProcessShot(int row, int col, AttackResult result);
+        protected virtual void ProcessShot(int row, int col, AttackResult result) { }
 
         /// <summary>
         ///     ''' The AI takes its attacks until its go is over.
