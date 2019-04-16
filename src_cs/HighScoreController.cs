@@ -14,9 +14,11 @@ namespace Battleship
 {
     public class HighScoreController
     {
-        private const int NAME_WIDTH = 3;
+        private const int NAME_WIDTH = 20;
         private const int SCORES_LEFT = 490;
-        
+
+        private const String HighScoreFont = "Courier"; // set the font once and have the whole code refer to this for fonts (makes switching font in the future easy)
+
         /// <summary>
         ///     ''' The score structure is used to keep the name and
         ///     ''' score of the top players together.
@@ -31,7 +33,7 @@ namespace Battleship
             ///         ''' </summary>
             ///         ''' <param name="obj">the object to compare to</param>
             ///         ''' <returns>a value that indicates the sort order</returns>
-            public int CompareTo(object obj)
+            public int CompareTo(object obj) //probably not needed as we can do _scores.Sort()
             {
                 if (obj is Score)
                 {
@@ -52,9 +54,9 @@ namespace Battleship
         ///     ''' <remarks>
         ///     ''' The format is
         ///     ''' # of scores
-        ///     ''' NNNSSS
-        ///     ''' 
-        ///     ''' Where NNN is the name and SSS is the score
+        ///     ''' name score
+        ///     '''
+        ///     ''' saparated by space
         ///     ''' </remarks>
         private static void LoadScores()
         {
@@ -62,26 +64,28 @@ namespace Battleship
             filename = SwinGame.PathToResource("highscores.txt");
 
             StreamReader input;
-            input = new StreamReader(filename);
-
-            // Read in the # of scores
-            int numScores;
-            numScores = Convert.ToInt32(input.ReadLine());
-
-            _Scores.Clear();
-
-            int i;
-
-            for (i = 1; i <= numScores; i++)
+            try
             {
-                Score s;
-                string line;
+                input = new StreamReader(filename);
+            }
+            catch (Exception) //if file not found, create it and open it
+            {
+                File.Create("Resources/highscores.txt").Close(); //when file is created it returns a file object, so we close it (or else the streamreader cant open it)
+                input = new StreamReader(filename);
+            }
 
-                line = input.ReadLine();
+            String line;
 
-                s.Name = line.Substring(0, NAME_WIDTH);
-                s.Value = Convert.ToInt32(line.Substring(NAME_WIDTH));
-                _Scores.Add(s);
+            _Scores.Clear(); // clear score list
+
+            while((line = input.ReadLine()) != null) //read every line
+            {
+                Score score = new Score();
+                String[] splitScore = line.Split(' '); //split the score
+                score.Name = splitScore[0];
+                score.Value = Int32.Parse(splitScore[1]); // convert to int first
+
+                _Scores.Add(score); // add score to the list
             }
             input.Close();
         }
@@ -92,9 +96,9 @@ namespace Battleship
         ///     ''' <remarks>
         ///     ''' The format is
         ///     ''' # of scores
-        ///     ''' NNNSSS
-        ///     ''' 
-        ///     ''' Where NNN is the name and SSS is the score
+        ///     ''' name score
+        ///     '''
+        ///     ''' saparated by space
         ///     ''' </remarks>
         private static void SaveScores()
         {
@@ -104,10 +108,8 @@ namespace Battleship
             StreamWriter output;
             output = new StreamWriter(filename);
 
-            output.WriteLine(_Scores.Count);
-
             foreach (Score s in _Scores)
-                output.WriteLine(s.Name + s.Value);
+                output.WriteLine(s.Name + ' ' + s.Value);
 
             output.Close();
         }
@@ -124,7 +126,9 @@ namespace Battleship
             if (_Scores.Count == 0)
                 LoadScores();
 
-            SwinGame.DrawText("   High Scores   ", Color.White, GameResources.GameFont("Courier"), SCORES_LEFT, SCORES_HEADING);
+            _Scores.Sort(); // sort the score
+
+            SwinGame.DrawText("   High Scores   ", Color.White, GameResources.GameFont(HighScoreFont), SCORES_LEFT, SCORES_HEADING);
 
             // For all of the scores
             int i;
@@ -136,9 +140,9 @@ namespace Battleship
 
                 // for scores 1 - 9 use 01 - 09
                 if (i < 9)
-                    SwinGame.DrawText(" " + (i + 1) + ":   " + s.Name + "   " + s.Value, Color.White, GameResources.GameFont("Courier"), SCORES_LEFT, SCORES_TOP + i * SCORE_GAP);
+                    SwinGame.DrawText(" " + (i + 1) + ":   " + s.Name + "   " + s.Value, Color.White, GameResources.GameFont(HighScoreFont), SCORES_LEFT, SCORES_TOP + i * SCORE_GAP);
                 else
-                    SwinGame.DrawText(i + 1 + ":   " + s.Name + "   " + s.Value, Color.White, GameResources.GameFont("Courier"), SCORES_LEFT, SCORES_TOP + i * SCORE_GAP);
+                    SwinGame.DrawText(i + 1 + ":   " + s.Name + "   " + s.Value, Color.White, GameResources.GameFont(HighScoreFont), SCORES_LEFT, SCORES_TOP + i * SCORE_GAP);
             }
         }
 
@@ -166,8 +170,8 @@ namespace Battleship
             if (_Scores.Count == 0)
                 LoadScores();
 
-            // is it a high score
-            if (value > _Scores[_Scores.Count - 1].Value)
+            // if there is less than 10 records or if the current score is better than the last place score
+            if (_Scores.Count < 10 || value > _Scores[_Scores.Count - 1].Value)
             {
                 Score s = new Score();
                 s.Value = value;
@@ -175,9 +179,9 @@ namespace Battleship
                 GameController.AddNewState(GameState.ViewingHighScores);
 
                 int x;
-                x = SCORES_LEFT + SwinGame.TextWidth(GameResources.GameFont("Courier"), "Name: ");
+                x = SCORES_LEFT + SwinGame.TextWidth(GameResources.GameFont(HighScoreFont), "Name: ");
 
-                SwinGame.StartReadingText(Color.White, NAME_WIDTH, GameResources.GameFont("Courier"), x, ENTRY_TOP);
+                SwinGame.StartReadingText(Color.White, NAME_WIDTH, GameResources.GameFont(HighScoreFont), x, ENTRY_TOP);
 
                 // Read the text from the user
                 while (SwinGame.ReadingText())
@@ -186,18 +190,24 @@ namespace Battleship
 
                     UtilityFunctions.DrawBackground();
                     DrawHighScores();
-                    SwinGame.DrawText("Name: ", Color.White, GameResources.GameFont("Courier"), SCORES_LEFT, ENTRY_TOP);
+                    SwinGame.DrawText("Name: ", Color.White, GameResources.GameFont(HighScoreFont), SCORES_LEFT, ENTRY_TOP);
                     SwinGame.RefreshScreen();
                 }
 
                 s.Name = SwinGame.TextReadAsASCII();
 
-                if (s.Name.Length < 3)
-                    s.Name = s.Name + new string(System.Convert.ToChar(" "), 3 - s.Name.Length);
+                //if (s.Name.Length < 3)
+                //    s.Name = s.Name + new string(System.Convert.ToChar(" "), 3 - s.Name.Length);
+                // we dont want 3 letters names anymore
 
+                //only delete last entry if score list is more than 10
+               if (_Scores.Count >= 10)
                 _Scores.RemoveAt(_Scores.Count - 1);
+
                 _Scores.Add(s);
                 _Scores.Sort();
+
+                SaveScores(); // save score to file
 
                 GameController.EndCurrentState();
             }
