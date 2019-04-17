@@ -16,7 +16,7 @@ namespace Battleship
         private static void LoadImages()
         {
             // Backgrounds
-            NewImage("Menu", "main_page.jpg");
+            NewImage("Menu", "main_page1.jpg");
             NewImage("Discovery", "discover.jpg");
             NewImage("Deploy", "deploy.jpg");
 
@@ -43,17 +43,17 @@ namespace Battleship
         private static void LoadSounds()
         {
             NewSound("Error", "error.wav");
-            NewSound("Hit", "hit.wav");
-            NewSound("Sink", "sink.wav");
+            NewSound("Hit", "hit1.wav");
+            NewSound("Sink", "sink1.wav");
             NewSound("Siren", "siren.wav");
-            NewSound("Miss", "watershot.wav");
+            NewSound("Miss", "shotfired.wav");
             NewSound("Winner", "winner.wav");
             NewSound("Lose", "lose.wav");
         }
 
         private static void LoadMusic()
         {
-            NewMusic("Background", "horrordrone.mp3");
+            NewMusic("Background", "ingamemusic.wav");
         }
 
         /// <summary>
@@ -156,12 +156,12 @@ namespace Battleship
 
         private static void ShowLoadingScreen()
         {
-            _Background = SwinGame.LoadBitmap(SwinGame.PathToResource("SplashBack.png", ResourceKind.BitmapResource));
+            _Background = SwinGame.LoadBitmap(SwinGame.PathToResource("SplashBack1.png", ResourceKind.BitmapResource));
             SwinGame.DrawBitmap(_Background, 0, 0);
             SwinGame.RefreshScreen();
             SwinGame.ProcessEvents();
 
-            _Animation = SwinGame.LoadBitmap(SwinGame.PathToResource("SwinGameAni.jpg", ResourceKind.BitmapResource));
+            _Animation = SwinGame.LoadBitmap(SwinGame.PathToResource("SwinGameAni1.jpg", ResourceKind.BitmapResource));
             _LoadingFont = SwinGame.LoadFont(SwinGame.PathToResource("arial.ttf", ResourceKind.FontResource), 12);
             _StartSound = Audio.LoadSoundEffect(SwinGame.PathToResource("SwinGameStart.ogg", ResourceKind.SoundResource));
 
