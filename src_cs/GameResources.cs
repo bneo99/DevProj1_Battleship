@@ -8,7 +8,7 @@ namespace Battleship
         private static void LoadFonts()
         {
             NewFont("ArialLarge", "arial.ttf", 80);
-            NewFont("Courier", "cour.ttf", 14);
+            NewFont("Gameplay", "Gameplay.ttf",18);
             NewFont("CourierSmall", "cour.ttf", 8);
             NewFont("Menu", "ffaccess.ttf", 8);
         }
