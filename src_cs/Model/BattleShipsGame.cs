@@ -11,6 +11,10 @@ namespace Battleship
     public class BattleShipsGame
     {
 
+
+        public static bool _try;
+
+
         /// <summary>
         ///     ''' The attack delegate type is used to send notifications of the end of an
         ///     ''' attack by a player or the AI.
@@ -88,8 +92,20 @@ namespace Battleship
 
             // Will exit the game when all players ships are destroyed
             if (_players[otherPlayer].IsDestroyed)
+            {
                 newAttack = new AttackResult(ResultOfAttack.GameOver, newAttack.Ship, newAttack.Text, row, col);
-
+            }
+            
+            //added to let check whether the shots is >80 or not
+            else if (ReferenceEquals(Player, GameController.ComputerPlayer) && GameController.HumanPlayer.Shots > 80)
+            {
+                //changed to true to make sure it doesn't give the win message
+                //not working due to implementations in Player.cs
+                //dealing
+                newAttack = new AttackResult(ResultOfAttack.GameOver, newAttack.Ship, newAttack.Text, row, col);
+                
+                _try = true;
+            }
             AttackCompleted?.Invoke(this, newAttack);
 
             // change player if the last hit was a miss
