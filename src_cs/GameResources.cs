@@ -18,6 +18,7 @@ namespace Battleship
         {
             // Backgrounds
             NewImage("Menu", "main_page1.jpg");
+            NewImage("Help", "help.jpg");
             NewImage("Discovery", "discover.jpg");
             NewImage("Deploy", "deploy.jpg");
 

@@ -322,6 +322,12 @@ namespace Battleship
                         break;
                     }
 
+                case GameState.ViewingHelpPage:
+                    {
+                        HelpController.HandleHelpPageInput();
+                        break;
+                    }
+
                 case GameState.ViewingGameMenu:
                     {
                         MenuController.HandleGameMenuInput();
@@ -377,6 +383,12 @@ namespace Battleship
                 case GameState.ViewingMainMenu:
                     {
                         MenuController.DrawMainMenu();
+                        break;
+                    }
+
+                case GameState.ViewingHelpPage:
+                    {
+                        HelpController.DrawHelpPage();
                         break;
                     }
 

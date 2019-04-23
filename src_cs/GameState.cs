@@ -9,6 +9,11 @@ namespace Battleship
         ViewingMainMenu,
 
         /// <summary>
+        ///     ''' The player is viewing the help page
+        ///     ''' </summary>
+        ViewingHelpPage,
+
+        /// <summary>
         ///     ''' The player is viewing the game menu
         ///     ''' </summary>
         ViewingGameMenu,
