@@ -17,7 +17,7 @@ namespace Battleship
         private const int NAME_WIDTH = 20;
         private const int SCORES_LEFT = 490;
 
-        private const String HighScoreFont = "Courier"; // set the font once and have the whole code refer to this for fonts (makes switching font in the future easy)
+        private const String HighScoreFont = "Gameplay"; // set the font once and have the whole code refer to this for fonts (makes switching font in the future easy)
 
         /// <summary>
         ///     ''' The score structure is used to keep the name and
@@ -128,7 +128,7 @@ namespace Battleship
 
             _Scores.Sort(); // sort the score
 
-            SwinGame.DrawText("   High Scores   ", Color.White, GameResources.GameFont(HighScoreFont), SCORES_LEFT, SCORES_HEADING);
+            SwinGame.DrawText("   High Scores   ", Color.Green, GameResources.GameFont(HighScoreFont), SCORES_LEFT, SCORES_HEADING);
 
             // For all of the scores
             int i;
@@ -140,9 +140,9 @@ namespace Battleship
 
                 // for scores 1 - 9 use 01 - 09
                 if (i < 9)
-                    SwinGame.DrawText(" " + (i + 1) + ":   " + s.Name + "   " + s.Value, Color.White, GameResources.GameFont(HighScoreFont), SCORES_LEFT, SCORES_TOP + i * SCORE_GAP);
+                    SwinGame.DrawText(" " + (i + 1) + ":   " + s.Name + "   " + s.Value, Color.Yellow, GameResources.GameFont(HighScoreFont), SCORES_LEFT, SCORES_TOP + i * SCORE_GAP);
                 else
-                    SwinGame.DrawText(i + 1 + ":   " + s.Name + "   " + s.Value, Color.White, GameResources.GameFont(HighScoreFont), SCORES_LEFT, SCORES_TOP + i * SCORE_GAP);
+                    SwinGame.DrawText(i + 1 + ":   " + s.Name + "   " + s.Value, Color.Yellow, GameResources.GameFont(HighScoreFont), SCORES_LEFT, SCORES_TOP + i * SCORE_GAP);
             }
         }
 
@@ -190,7 +190,7 @@ namespace Battleship
 
                     UtilityFunctions.DrawBackground();
                     DrawHighScores();
-                    SwinGame.DrawText("Name: ", Color.White, GameResources.GameFont(HighScoreFont), SCORES_LEFT, ENTRY_TOP);
+                    SwinGame.DrawText("Name: ", Color.Green, GameResources.GameFont(HighScoreFont), SCORES_LEFT, ENTRY_TOP);
                     SwinGame.RefreshScreen();
                 }
 

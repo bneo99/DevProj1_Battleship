@@ -17,7 +17,10 @@ namespace Battleship
         ///     ''' <remarks>
         ///     ''' These are the text captions for the menu items.
         ///     ''' </remarks>
-        private static readonly string[][] _menuStructure = new[] { new string[] { "PLAY", "SETUP", "SCORES", "QUIT" }, new string[] { "RETURN", "SURRENDER", "QUIT" }, new string[] { "EASY", "MEDIUM", "HARD" } };
+        private static readonly string[][] _menuStructure = new[] {
+            new string[] { "PLAY", "HELP","DIFFICULTY", "HIGHSCORE", "QUIT" },
+            new string[] { "RETURN", "SURRENDER", "QUIT" },
+            new string[] { "EASY", "MEDIUM", "HARD" } };
 
         private const int MENU_TOP = 575;
         private const int MENU_LEFT = 30;
@@ -32,9 +35,10 @@ namespace Battleship
         private const int SETUP_MENU = 2;
 
         private const int MAIN_MENU_PLAY_BUTTON = 0;
-        private const int MAIN_MENU_SETUP_BUTTON = 1;
-        private const int MAIN_MENU_TOP_SCORES_BUTTON = 2;
-        private const int MAIN_MENU_QUIT_BUTTON = 3;
+        private const int MAIN_MENU_HELP_BUTTON = 1;
+        private const int MAIN_MENU_SETUP_BUTTON = 2;
+        private const int MAIN_MENU_TOP_SCORES_BUTTON = 3;
+        private const int MAIN_MENU_QUIT_BUTTON = 4;
 
         private const int SETUP_MENU_EASY_BUTTON = 0;
         private const int SETUP_MENU_MEDIUM_BUTTON = 1;
@@ -121,7 +125,7 @@ namespace Battleship
         public static void DrawMainMenu()
         {
             // Clears the Screen to Black
-            // SwinGame.DrawText("Main Menu", Color.White, GameFont("ArialLarge"), 50, 50)
+            //SwinGame.DrawText("Main Menu", Color.White, GameResources.GameFont("ArialLarge"), 50, 50);
 
             DrawButtons(MAIN_MENU);
         }
@@ -132,7 +136,7 @@ namespace Battleship
         public static void DrawGameMenu()
         {
             // Clears the Screen to Black
-            // SwinGame.DrawText("Paused", Color.White, GameFont("ArialLarge"), 50, 50)
+            //SwinGame.DrawText("Paused", Color.White, GameResources.GameFont("ArialLarge"), 50, 50);
 
             DrawButtons(GAME_MENU);
         }
@@ -146,7 +150,7 @@ namespace Battleship
         public static void DrawSettings()
         {
             // Clears the Screen to Black
-            // SwinGame.DrawText("Settings", Color.White, GameFont("ArialLarge"), 50, 50)
+            //SwinGame.DrawText("Settings", Color.White, GameResources.GameFont("ArialLarge"), 50, 50);
 
             DrawButtons(MAIN_MENU);
             DrawButtons(SETUP_MENU, 1, 1);
@@ -182,7 +186,7 @@ namespace Battleship
             {
                 int btnLeft;
                 btnLeft = MENU_LEFT + BUTTON_SEP * (i + xOffset);
-                // SwinGame.FillRectangle(Color.White, btnLeft, btnTop, BUTTON_WIDTH, BUTTON_HEIGHT)
+                //SwinGame.FillRectangle(Color.White, btnLeft, btnTop, BUTTON_WIDTH, BUTTON_HEIGHT);
                 SwinGame.DrawTextLines(_menuStructure[menu][i], MENU_COLOR, Color.Black, GameResources.GameFont("Menu"), FontAlignment.AlignCenter, btnLeft + TEXT_OFFSET, btnTop + TEXT_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT);
 
                 if (SwinGame.MouseDown(MouseButton.LeftButton) & IsMouseOverMenu(i, level, xOffset))
@@ -255,6 +259,12 @@ namespace Battleship
                 case MAIN_MENU_PLAY_BUTTON:
                     {
                         GameController.StartGame();
+                        break;
+                    }
+
+                case MAIN_MENU_HELP_BUTTON:
+                    {
+                        GameController.AddNewState(GameState.ViewingHelpPage);
                         break;
                     }
 

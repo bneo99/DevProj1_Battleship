@@ -75,6 +75,7 @@
     <Reference Include="SwinGame">
       <HintPath>lib\SwinGame.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <None Include="lib\cygpath" />
@@ -89,6 +90,7 @@
     <None Include="Resources\SwinGame.icns" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src_cs\HelpController.cs" />
     <Compile Include="src_cs\DeploymentController.cs" />
     <Compile Include="src_cs\DiscoveryController.cs" />
     <Compile Include="src_cs\EndingGameController.cs" />

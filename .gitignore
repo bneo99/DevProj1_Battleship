@@ -5,6 +5,5 @@ obj
 out.log
 .DS_Store
 App.config
-Battleship.csproj
-Battleship.sln
+Battleship.*
 Resources/highscores.txt
