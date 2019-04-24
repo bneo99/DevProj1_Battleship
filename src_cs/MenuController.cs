@@ -10,6 +10,11 @@ namespace Battleship
 {
     public static class MenuController
     {
+        /// <summary>
+        /// A public variable to check the current gameMode
+        /// </summary>
+        public static AIOption _playMode;
+
 
         /// <summary>
         ///     ''' The menu structure for the game.
@@ -20,12 +25,12 @@ namespace Battleship
         private static readonly string[][] _menuStructure = new[] {
             new string[] { "PLAY", "HELP","DIFFICULTY", "HIGHSCORE", "QUIT" },
             new string[] { "RETURN", "SURRENDER", "QUIT" },
-            new string[] { "EASY", "MEDIUM", "HARD" } };
+            new string[] { "EASY", "MEDIUM", "HARD", "CHALLENGE"} };
 
         private const int MENU_TOP = 575;
         private const int MENU_LEFT = 30;
         private const int MENU_GAP = 0;
-        private const int BUTTON_WIDTH = 75;
+        private const int BUTTON_WIDTH = 75; // was 75
         private const int BUTTON_HEIGHT = 15;
         private const int BUTTON_SEP = BUTTON_WIDTH + MENU_GAP;
         private const int TEXT_OFFSET = 0;
@@ -43,7 +48,9 @@ namespace Battleship
         private const int SETUP_MENU_EASY_BUTTON = 0;
         private const int SETUP_MENU_MEDIUM_BUTTON = 1;
         private const int SETUP_MENU_HARD_BUTTON = 2;
-        private const int SETUP_MENU_EXIT_BUTTON = 3;
+        //CHALLENGE
+        private const int SETUP_MENU_CHALLENGE_BUTTON = 3;
+        private const int SETUP_MENU_EXIT_BUTTON = 4;
 
         private const int GAME_MENU_RETURN_BUTTON = 0;
         private const int GAME_MENU_SURRENDER_BUTTON = 1;
@@ -52,6 +59,23 @@ namespace Battleship
         private static readonly Color MENU_COLOR = SwinGame.RGBAColor(2, 167, 252, 255);
         private static readonly Color HIGHLIGHT_COLOR = SwinGame.RGBAColor(1, 57, 86, 255);
 
+
+
+        /// <summary>
+        /// A public variable to check the current gameMode
+        /// </summary>
+        public static AIOption PlayMode
+        {
+            get
+            {
+                return _playMode;
+            }
+            set
+            {
+                _playMode = value;
+            }
+        }
+        
         /// <summary>
         ///     ''' Handles the processing of user input when the main menu is showing
         ///     ''' </summary>
@@ -299,18 +323,27 @@ namespace Battleship
                 case SETUP_MENU_EASY_BUTTON:
                     {
                         GameController.SetDifficulty(AIOption.Easy);
+                        _playMode = AIOption.Easy;
                         break;
                     }
 
                 case SETUP_MENU_MEDIUM_BUTTON:
                     {
                         GameController.SetDifficulty(AIOption.Medium);
+                        _playMode = AIOption.Medium;
                         break;
                     }
 
                 case SETUP_MENU_HARD_BUTTON:
                     {
                         GameController.SetDifficulty(AIOption.Hard);
+                        _playMode = AIOption.Hard;
+                        break;
+                    }
+                case SETUP_MENU_CHALLENGE_BUTTON:
+                    {
+                        GameController.SetDifficulty(AIOption.Challenge);
+                        _playMode = AIOption.Challenge;
                         break;
                     }
             }

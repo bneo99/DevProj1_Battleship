@@ -11,7 +11,9 @@ namespace Battleship
     public class BattleShipsGame
     {
 
-
+        /// <summary>
+        /// A boolean variable called _try
+        /// </summary>
         public static bool _try;
 
 
@@ -95,16 +97,20 @@ namespace Battleship
             {
                 newAttack = new AttackResult(ResultOfAttack.GameOver, newAttack.Ship, newAttack.Text, row, col);
             }
-            
-            //added to let check whether the shots is >80 or not
-            else if (ReferenceEquals(Player, GameController.ComputerPlayer) && GameController.HumanPlayer.Shots > 80)
+
+            // Will check whether this game mode is challenge or not
+            if (MenuController.PlayMode == AIOption.Challenge)
             {
-                //changed to true to make sure it doesn't give the win message
-                //not working due to implementations in Player.cs
-                //dealing
-                newAttack = new AttackResult(ResultOfAttack.GameOver, newAttack.Ship, newAttack.Text, row, col);
-                
-                _try = true;
+                //added to let check whether the shots is >80 or not
+                if (ReferenceEquals(Player, GameController.ComputerPlayer) && GameController.HumanPlayer.Shots > 80)
+                {
+                    //changed to true to make sure it doesn't give the win message
+                    //not working due to implementations in Player.cs
+                    //dealing
+                    newAttack = new AttackResult(ResultOfAttack.GameOver, newAttack.Ship, newAttack.Text, row, col);
+
+                    _try = true;
+                }
             }
             AttackCompleted?.Invoke(this, newAttack);
 

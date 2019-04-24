@@ -101,6 +101,7 @@
     <Compile Include="src_cs\HighScoreController.cs" />
     <Compile Include="src_cs\MenuController.cs" />
     <Compile Include="src_cs\Model\AIHardPlayer.cs" />
+    <Compile Include="src_cs\Model\AIHardPlayerCM.cs" />
     <Compile Include="src_cs\Model\AIMediumPlayer.cs" />
     <Compile Include="src_cs\Model\AIOption.cs" />
     <Compile Include="src_cs\Model\AIPlayer.cs" />

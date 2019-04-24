@@ -22,6 +22,7 @@ namespace Battleship
             NewImage("Help", "test1.jpeg");
             NewImage("Discovery", "discover.jpg");
             NewImage("Deploy", "deploy.jpg");
+            NewImage("Dead", "ded.png");
 
             // Deployment
             NewImage("LeftRightButton", "deploy_dir_button_horiz.png");

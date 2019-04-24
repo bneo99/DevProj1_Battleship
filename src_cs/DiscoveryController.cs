@@ -68,6 +68,9 @@ namespace Battleship
             SwinGame.DrawText(GameController.HumanPlayer.Shots.ToString(), Color.White, GameResources.GameFont("Menu"), SCORES_LEFT, SHOTS_TOP);
             SwinGame.DrawText(GameController.HumanPlayer.Hits.ToString(), Color.White, GameResources.GameFont("Menu"), SCORES_LEFT, HITS_TOP);
             SwinGame.DrawText(GameController.HumanPlayer.Missed.ToString(), Color.White, GameResources.GameFont("Menu"), SCORES_LEFT, SPLASH_TOP);
+            //Added for number of moves
+            if (MenuController.PlayMode == AIOption.Challenge)
+                SwinGame.DrawText(GameController.HumanPlayer.Shots.ToString() + " / 80", Color.White, GameResources.GameFont("Menu"), 159, 317);
         }
     }
 }
