@@ -8,6 +8,7 @@ namespace Battleship
         private static void LoadFonts()
         {
             NewFont("ArialLarge", "arial.ttf", 80);
+            NewFont("Arial", "arial.ttf", 16);
             NewFont("Gameplay", "Gameplay.ttf",16);
             NewFont("Courier", "cour.ttf", 18);
             NewFont("CourierSmall", "cour.ttf", 8);
@@ -18,7 +19,7 @@ namespace Battleship
         {
             // Backgrounds
             NewImage("Menu", "main_page1.jpg");
-            NewImage("Help", "help.jpg");
+            NewImage("Help", "test1.jpeg");
             NewImage("Discovery", "discover.jpg");
             NewImage("Deploy", "deploy.jpg");
 
