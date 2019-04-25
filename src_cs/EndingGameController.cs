@@ -26,6 +26,7 @@ namespace Battleship
             else if (BattleShipsGame._try)
             {
                 SwinGame.DrawBitmap(GameResources.GameImage("Dead"), 0, 0);
+                //SwinGame.Delay(1000);
                 //SwinGame.DrawTextLines("YOU LOSE!", Color.White, Color.Transparent, GameResources.GameFont("ArialLarge"), FontAlignment.AlignCenter, 0, 250, SwinGame.ScreenWidth(), SwinGame.ScreenHeight());
                 //GameController.EndCurrentState();
             }
