@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using SwinGameSDK;
 
@@ -10,11 +10,11 @@ using SwinGameSDK;
 
 namespace Battleship
 {
-    public class GameController
+    internal class GameControllerChallengeMode
     {
-        private static BattleShipsGame _theGame;
-        private static Player _human;
-        private static AIPlayer _ai;
+        private static BattleShipsChallengeMode _theGame;
+        private static PlayerChallengeMode _human;
+        private static AIPlayerChallengeMode _ai;
 
         private static Stack _state = new Stack();
         //private static Stack<GameState> _state = new Stack<GameState>();
@@ -40,7 +40,7 @@ namespace Battleship
         ///     ''' </summary>
         ///     ''' <value>the human player</value>
         ///     ''' <returns>the human player</returns>
-        public static Player HumanPlayer
+        public static PlayerChallengeMode HumanPlayer
         {
             get
             {
@@ -53,7 +53,7 @@ namespace Battleship
         ///     ''' </summary>
         ///     ''' <value>the computer player</value>
         ///     ''' <returns>the conputer player</returns>
-        public static Player ComputerPlayer
+        public static AIPlayerChallengeMode ComputerPlayer
         {
             get
             {
@@ -61,7 +61,7 @@ namespace Battleship
             }
         }
 
-        public GameController()
+        public GameControllerChallengeMode()
         {
             // bottom state will be quitting. If player exits main menu then the game is over
             _state.Push(GameState.Quitting);
@@ -82,27 +82,11 @@ namespace Battleship
                 EndGame();
 
             // Create the game
-            _theGame = new BattleShipsGame();
+            _theGame = new BattleShipsChallengeMode();
+            
+            _ai = new AIHardPlayerChallengeMode(_theGame);
 
-            // create the players
-            if (_aiSetting == AIOption.Medium)
-            {
-                _ai = new AIMediumPlayer(_theGame);
-            }
-            else if (_aiSetting == AIOption.Hard)
-            {
-                _ai = new AIHardPlayer(_theGame);
-            }
-            else if(_aiSetting == AIOption.Challenge)
-            {
-                _ai = new AIHardPlayerCM(_theGame);
-            }
-            else
-            {
-                _ai = new AIPlayer(_theGame);
-            }
-
-            _human = new Player(_theGame);
+            _human = new PlayerChallengeMode(_theGame);
 
             // AddHandler _human.PlayerGrid.Changed, AddressOf GridChanged
             _ai.PlayerGrid.Changed += GridChanged;

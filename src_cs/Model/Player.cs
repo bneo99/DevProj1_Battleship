@@ -101,12 +101,16 @@ namespace Battleship
             }
         }
 
+        /// <summary>
+        /// Returns boolean value
+        /// whether all ships are destroyed or not
+        /// </summary>
         public bool IsDestroyed
         {
             get
             {
                 // Check if all ships are destroyed... -1 for the none ship
-                return _playerGrid.ShipsKilled == Enum.GetValues(typeof(ShipName)).Length - 1;
+                return PlayerGrid.ShipsKilled == Enum.GetValues(typeof(ShipName)).Length - 1;
             }
         }
 
