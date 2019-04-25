@@ -23,16 +23,17 @@ namespace Battleship
         ///     ''' These are the text captions for the menu items.
         ///     ''' </remarks>
         private static readonly string[][] _menuStructure = new[] {
-            new string[] { "PLAY", "HELP","DIFFICULTY", "HIGHSCORE", "QUIT" },
+            new string[] { "PLAY", "HELP", "DIFFICULTY", "HIGHSCORE", "QUIT" },
             new string[] { "RETURN", "SURRENDER", "QUIT" },
             new string[] { "EASY", "MEDIUM", "HARD", "CHALLENGE"} };
 
         private const int MENU_TOP = 575;
         private const int MENU_LEFT = 30;
         private const int MENU_GAP = 0;
-        private const int BUTTON_WIDTH = 75; // was 75
-        private const int BUTTON_HEIGHT = 15;
-        private const int BUTTON_SEP = BUTTON_WIDTH + MENU_GAP;
+        private const int BUTTON_HEIGHT = 20;
+        private static int BUTTON_WIDTH = 120; // button width
+        private static int BUTTON_SEP = BUTTON_WIDTH + MENU_GAP; //or last button width
+        private static int BUTTON_OFFSET; // offset for next button to be drawn
         private const int TEXT_OFFSET = 0;
 
         private const int MAIN_MENU = 0;
@@ -118,7 +119,7 @@ namespace Battleship
         {
             if (SwinGame.KeyTyped(KeyCode.vk_ESCAPE))
             {
-                GameController.EndCurrentState();
+                if(GameController.CurrentState != GameState.ViewingMainMenu) GameController.EndCurrentState(); //dont let escape quit game if in main menu
                 return true;
             }
 
@@ -128,7 +129,7 @@ namespace Battleship
                 for (i = 0; i <= _menuStructure[menu].Length - 1; i++)
                 {
                     // IsMouseOver the i'th button of the menu
-                    if (IsMouseOverMenu(i, level, xOffset))
+                    if (IsMouseOverMenu(menu, i, level, xOffset))
                     {
                         PerformMenuAction(menu, i);
                         return true;
@@ -148,9 +149,6 @@ namespace Battleship
         ///     ''' </summary>
         public static void DrawMainMenu()
         {
-            // Clears the Screen to Black
-            //SwinGame.DrawText("Main Menu", Color.White, GameResources.GameFont("ArialLarge"), 50, 50);
-
             DrawButtons(MAIN_MENU);
         }
 
@@ -159,23 +157,17 @@ namespace Battleship
         ///     ''' </summary>
         public static void DrawGameMenu()
         {
-            // Clears the Screen to Black
-            //SwinGame.DrawText("Paused", Color.White, GameResources.GameFont("ArialLarge"), 50, 50);
-
             DrawButtons(GAME_MENU);
         }
 
         /// <summary>
-        ///     ''' Draws the settings menu to the screen.
+        ///     ''' Draws the difficulty menu to the screen.
         ///     ''' </summary>
         ///     ''' <remarks>
         ///     ''' Also shows the main menu
         ///     ''' </remarks>
         public static void DrawSettings()
         {
-            // Clears the Screen to Black
-            //SwinGame.DrawText("Settings", Color.White, GameResources.GameFont("ArialLarge"), 50, 50);
-
             DrawButtons(MAIN_MENU);
             DrawButtons(SETUP_MENU, 1, 1);
         }
@@ -194,7 +186,7 @@ namespace Battleship
         ///     ''' </summary>
         ///     ''' <param name="menu">the menu to draw</param>
         ///     ''' <param name="level">the level (height) of the menu</param>
-        ///     ''' <param name="xOffset">the offset of the menu</param>
+        ///     ''' <param name="xOffset">the offset of the menu (levels of indents)</param>
         ///     ''' <remarks>
         ///     ''' The menu text comes from the _menuStructure field. The level indicates the height
         ///     ''' of the menu, to enable sub menus. The xOffset repositions the menu horizontally
@@ -202,45 +194,50 @@ namespace Battleship
         ///     ''' </remarks>
         private static void DrawButtons(int menu, int level, int xOffset)
         {
-            int btnTop;
-
-            btnTop = MENU_TOP - (MENU_GAP + BUTTON_HEIGHT) * level;
+            int btnTop = MENU_TOP - (MENU_GAP + BUTTON_HEIGHT) * level;
             int i;
-            for (i = 0; i <= _menuStructure[menu].Length - 1; i++)
+
+            BUTTON_OFFSET = MENU_LEFT + xOffset * 50; //offset to draw next button, MENU_LEFT is the offset from the left side of screen
+
+            for (i = 0; i <= _menuStructure[menu].Length - 1; i++) // generate buttons based on number of elements in array
             {
-                int btnLeft;
-                btnLeft = MENU_LEFT + BUTTON_SEP * (i + xOffset);
-                //SwinGame.FillRectangle(Color.White, btnLeft, btnTop, BUTTON_WIDTH, BUTTON_HEIGHT);
-                SwinGame.DrawTextLines(_menuStructure[menu][i], MENU_COLOR, Color.Black, GameResources.GameFont("Menu"), FontAlignment.AlignCenter, btnLeft + TEXT_OFFSET, btnTop + TEXT_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT);
+                if (i > 0) BUTTON_SEP = _menuStructure[menu][i-1].Length * 14 + 40; //last button width; i-1 coz first one ofc wont have a button before it
+                else BUTTON_SEP = 0;
 
-                if (SwinGame.MouseDown(MouseButton.LeftButton) & IsMouseOverMenu(i, level, xOffset))
-                    SwinGame.DrawRectangle(HIGHLIGHT_COLOR, btnLeft, btnTop, BUTTON_WIDTH, BUTTON_HEIGHT);
+                BUTTON_WIDTH = _menuStructure[menu][i].Length * 14 + 40; // current button width
+            //ori: btnLeft = MENU_LEFT + BUTTON_SEP * (i + xOffset);
+                BUTTON_OFFSET += BUTTON_SEP; //add up last button width into offset
+
+                SwinGame.DrawTextLines(_menuStructure[menu][i], MENU_COLOR, Color.Black, GameResources.GameFont("Menu"), FontAlignment.AlignCenter, BUTTON_OFFSET + TEXT_OFFSET, btnTop + TEXT_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT);
+
+                //if (SwinGame.MouseDown(MouseButton.LeftButton) & UtilityFunctions.IsMouseInRectangle(BUTTON_OFFSET, btnTop, BUTTON_WIDTH, BUTTON_HEIGHT))
+                    if (SwinGame.MouseDown(MouseButton.LeftButton) & IsMouseOverMenu(menu, i, level, xOffset))
+                        SwinGame.DrawRectangle(HIGHLIGHT_COLOR, BUTTON_OFFSET, btnTop, BUTTON_WIDTH, BUTTON_HEIGHT);
             }
-        }
-
-        /// <summary>
-        ///     ''' Determined if the mouse is over one of the button in the main menu.
-        ///     ''' </summary>
-        ///     ''' <param name="button">the index of the button to check</param>
-        ///     ''' <returns>true if the mouse is over that button</returns>
-        private static bool IsMouseOverButton(int button)
-        {
-            return IsMouseOverMenu(button, 0, 0);
         }
 
         /// <summary>
         ///     ''' Checks if the mouse is over one of the buttons in a menu.
         ///     ''' </summary>
         ///     ''' <param name="button">the index of the button to check</param>
-        ///     ''' <param name="level">the level of the menu</param>
-        ///     ''' <param name="xOffset">the xOffset of the menu</param>
+        ///     ''' <param name="level">the level of the menu (height level)</param>
+        ///     ''' <param name="xOffset">the xOffset of the menu (level of indent)</param>
         ///     ''' <returns>true if the mouse is over the button</returns>
-        private static bool IsMouseOverMenu(int button, int level, int xOffset)
+        private static bool IsMouseOverMenu(int menu, int button, int level, int xOffset)
         {
             int btnTop = MENU_TOP - (MENU_GAP + BUTTON_HEIGHT) * level;
-            int btnLeft = MENU_LEFT + BUTTON_SEP * (button + xOffset);
 
-            return UtilityFunctions.IsMouseInRectangle(btnLeft, btnTop, BUTTON_WIDTH, BUTTON_HEIGHT);
+            int btnLeft = MENU_LEFT + xOffset * 50; //offset for first button to start, MENU_LEFT is the offset from the left side of screen
+            int btnSep, btnWdth = _menuStructure[menu][button].Length * 14 + 40; // current button width;
+
+            for (int i = 0; i < button + 1; i++) // cycle through buttons till the button to check
+            {
+                if (i > 0) btnSep = _menuStructure[menu][i - 1].Length * 14 + 40; //last button width; i-1 coz first one ofc wont have a button before it
+                else btnSep = 0;
+
+                btnLeft += btnSep; //add up last button width into offset
+            }
+            return UtilityFunctions.IsMouseInRectangle(btnLeft, btnTop, btnWdth, BUTTON_HEIGHT);
         }
 
         /// <summary>

@@ -12,7 +12,7 @@ namespace Battleship
             NewFont("Gameplay", "Gameplay.ttf",16);
             NewFont("Courier", "cour.ttf", 18);
             NewFont("CourierSmall", "cour.ttf", 8);
-            NewFont("Menu", "ffaccess.ttf", 8);
+            NewFont("Menu", "ffaccess.ttf", 14);
         }
 
         private static void LoadImages()
