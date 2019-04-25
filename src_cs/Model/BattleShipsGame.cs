@@ -12,9 +12,9 @@ namespace Battleship
     {
 
         /// <summary>
-        /// A boolean variable called _try
+        /// var to tell endgamecontroller to end game now
         /// </summary>
-        public static bool _try;
+        public static bool _endGameNow;
 
 
         /// <summary>
@@ -97,19 +97,19 @@ namespace Battleship
             {
                 newAttack = new AttackResult(ResultOfAttack.GameOver, newAttack.Ship, newAttack.Text, row, col);
             }
-
+            newAttack = new AttackResult(ResultOfAttack.GameOver, newAttack.Ship, newAttack.Text, row, col);
             // Will check whether this game mode is challenge or not
             if (MenuController.PlayMode == AIOption.Challenge)
             {
                 //added to let check whether the shots is >80 or not
-                if (ReferenceEquals(Player, GameController.ComputerPlayer) && GameController.HumanPlayer.Shots > 80)
+                if (ReferenceEquals(Player, GameController.ComputerPlayer) && GameController.HumanPlayer.Shots >= 80)
                 {
                     //changed to true to make sure it doesn't give the win message
                     //not working due to implementations in Player.cs
                     //dealing
                     newAttack = new AttackResult(ResultOfAttack.GameOver, newAttack.Ship, newAttack.Text, row, col);
 
-                    _try = true;
+                    _endGameNow = true;
                 }
             }
             AttackCompleted?.Invoke(this, newAttack);
