@@ -97,8 +97,8 @@ namespace Battleship
             {
                 newAttack = new AttackResult(ResultOfAttack.GameOver, newAttack.Ship, newAttack.Text, row, col);
             }
-            newAttack = new AttackResult(ResultOfAttack.GameOver, newAttack.Ship, newAttack.Text, row, col);
-            // Will check whether this game mode is challenge or not
+
+            // check whether this game mode is challenge or not
             if (MenuController.PlayMode == AIOption.Challenge)
             {
                 //added to let check whether the shots is >80 or not

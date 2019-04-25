@@ -53,9 +53,9 @@ namespace Battleship
         public static void DrawDiscovery()
         {
             const int SCORES_LEFT = 172;
-            const int SHOTS_TOP = 157;
-            const int HITS_TOP = 206;
-            const int SPLASH_TOP = 256;
+            const int SHOTS_TOP = 150;
+            const int HITS_TOP = 200;
+            const int SPLASH_TOP = 250;
 
             if ((SwinGame.KeyDown(KeyCode.vk_LSHIFT) | SwinGame.KeyDown(KeyCode.vk_RSHIFT)) & SwinGame.KeyDown(KeyCode.vk_c))
                 UtilityFunctions.DrawField(GameController.HumanPlayer.EnemyGrid, GameController.ComputerPlayer, true);
@@ -64,13 +64,12 @@ namespace Battleship
 
             UtilityFunctions.DrawSmallField(GameController.HumanPlayer.PlayerGrid, GameController.HumanPlayer);
             UtilityFunctions.DrawMessage();
-
-            SwinGame.DrawText(GameController.HumanPlayer.Shots.ToString(), Color.White, GameResources.GameFont("Menu"), SCORES_LEFT, SHOTS_TOP);
+            //show max moves for challenge
+            if (MenuController.PlayMode == AIOption.Challenge)
+                SwinGame.DrawText(GameController.HumanPlayer.Shots.ToString() + " / 80", Color.White, GameResources.GameFont("Menu"), SCORES_LEFT, SHOTS_TOP);
+            else SwinGame.DrawText(GameController.HumanPlayer.Shots.ToString(), Color.White, GameResources.GameFont("Menu"), SCORES_LEFT, SHOTS_TOP);
             SwinGame.DrawText(GameController.HumanPlayer.Hits.ToString(), Color.White, GameResources.GameFont("Menu"), SCORES_LEFT, HITS_TOP);
             SwinGame.DrawText(GameController.HumanPlayer.Missed.ToString(), Color.White, GameResources.GameFont("Menu"), SCORES_LEFT, SPLASH_TOP);
-            //Added for number of moves
-            if (MenuController.PlayMode == AIOption.Challenge)
-                SwinGame.DrawText(GameController.HumanPlayer.Shots.ToString() + " / 80", Color.White, GameResources.GameFont("Menu"), 159, 317);
         }
     }
 }
