@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using SwinGameSDK;
+using Newtonsoft.Json;
 
 /// <summary>
 /// ''' Controls displaying and collecting high score data.
@@ -15,9 +16,19 @@ namespace Battleship
     public class HighScoreController
     {
         private const int NAME_WIDTH = 20;
-        private const int SCORES_LEFT = 490;
+        private const int SCORES_LEFT = 100;
 
-        private const String HighScoreFont = "Gameplay"; // set the font once and have the whole code refer to this for fonts (makes switching font in the future easy)
+        private const int btnStartX = 70;
+        private const int btnStartY = 120;
+        private const int btnWidth = 120;
+        private const int btnHeight = 20;
+
+        //dictionary to hold all scores, key is difficulty, value is lists containing scores
+        private static Dictionary<AIOption, List<Score>> _AllScores = new Dictionary<AIOption, List<Score>>();
+
+        private static AIOption _difficulty = AIOption.Easy; //highscore page always starts in easy mode
+
+        private const String HighScoreFont = "HighScore"; // set the font once and have the whole code refer to this for fonts (makes switching font in the future easy)
 
         /// <summary>
         ///     ''' The score structure is used to keep the name and
@@ -44,72 +55,60 @@ namespace Battleship
                 else
                     return 0;
             }
+
         }
-
-        private static List<Score> _Scores = new List<Score>();
-
-        /// <summary>
-        ///     ''' Loads the scores from the highscores text file.
-        ///     ''' </summary>
-        ///     ''' <remarks>
-        ///     ''' The format is
-        ///     ''' # of scores
-        ///     ''' name score
-        ///     '''
-        ///     ''' saparated by space
-        ///     ''' </remarks>
-        private static void LoadScores()
+            /// <summary>
+            /// Loads the scores from the highscores text file.
+            /// </summary>
+            private static void LoadScores()
         {
             string filename;
-            filename = SwinGame.PathToResource("highscores.txt");
+            filename = SwinGame.PathToResource("highscores.json"); //json lai
 
             StreamReader input;
             try
             {
-                input = new StreamReader(filename);
+                input = new StreamReader(filename); //try to open file
             }
             catch (Exception) //if file not found, create it and open it
             {
-                File.Create("Resources/highscores.txt").Close(); //when file is created it returns a file object, so we close it (or else the streamreader cant open it)
-                input = new StreamReader(filename);
+                File.Create("Resources/highscores.json").Close(); //when file is created it returns a file object, so we close it (or else the streamreader cant open it)
+                StreamWriter s = new StreamWriter(filename); //open file to be written to
+
+                //initialise all the lists for the different difficulties
+                _AllScores[AIOption.Easy] = new List<Score>();
+                _AllScores[AIOption.Medium] = new List<Score>();
+                _AllScores[AIOption.Hard] = new List<Score>();
+                _AllScores[AIOption.Challenge] = new List<Score>();
+
+                //write initial json structure into file
+                s.Write(JsonConvert.SerializeObject(_AllScores));
+                s.Close(); //close the streamwriter
+
+                input = new StreamReader(filename); // open file to be read again (even if theres nothing haha)
             }
 
-            String line;
+            _AllScores.Clear(); // clear scores list
 
-            _Scores.Clear(); // clear score list
+            _AllScores = JsonConvert.DeserializeObject<Dictionary<AIOption, List<Score>>>(input.ReadLine()); // reads the json string from file and parse to _AllScores
 
-            while((line = input.ReadLine()) != null) //read every line
-            {
-                Score score = new Score();
-                String[] splitScore = line.Split(' '); //split the score
-                score.Name = splitScore[0];
-                score.Value = Int32.Parse(splitScore[1]); // convert to int first
-
-                _Scores.Add(score); // add score to the list
-            }
-            input.Close();
+            input.Close(); // close file
         }
 
         /// <summary>
-        ///     ''' Saves the scores back to the highscores text file.
-        ///     ''' </summary>
-        ///     ''' <remarks>
-        ///     ''' The format is
-        ///     ''' # of scores
-        ///     ''' name score
-        ///     '''
-        ///     ''' saparated by space
-        ///     ''' </remarks>
+        /// Saves the scores back to the highscores json file.
+        /// </summary>
+
         private static void SaveScores()
         {
             string filename;
-            filename = SwinGame.PathToResource("highscores.txt");
+            filename = SwinGame.PathToResource("highscores.json");
 
             StreamWriter output;
             output = new StreamWriter(filename);
 
-            foreach (Score s in _Scores)
-                output.WriteLine(s.Name + ' ' + s.Value);
+            //write the dictionary to file
+            output.Write(JsonConvert.SerializeObject(_AllScores));
 
             output.Close();
         }
@@ -119,24 +118,41 @@ namespace Battleship
         ///     ''' </summary>
         public static void DrawHighScores()
         {
-            const int SCORES_HEADING = 40;
-            const int SCORES_TOP = 80;
+            const int SCORES_TOP = 170;
             const int SCORE_GAP = 30;
 
-            if (_Scores.Count == 0)
-                LoadScores();
+            LoadScores();
 
-            _Scores.Sort(); // sort the score
+            _AllScores[AIOption.Easy].Sort(); // sort the scores
+            _AllScores[AIOption.Medium].Sort();
+            _AllScores[AIOption.Hard].Sort();
+            _AllScores[AIOption.Challenge].Sort();
 
-            SwinGame.DrawText("   High Scores   ", Color.Green, GameResources.GameFont(HighScoreFont), SCORES_LEFT, SCORES_HEADING);
+            SwinGame.DrawRectangle(SwinGame.RGBAColor(0, 0, 0, 127), true, 50, 50, 700, 500); //create shaded area so text is easier to read
+
+            SwinGame.DrawText("High Score", Color.White, GameResources.GameFont("HighScoreTitle"), 70, 70);
+
+            //draw the buttons
+            if(_difficulty == AIOption.Easy) SwinGame.DrawTextLines("Easy", Color.Pink, Color.Blue, GameResources.GameFont("HighScoreDifficulty"), FontAlignment.AlignCenter, btnStartX, btnStartY, btnWidth, btnHeight);
+            else SwinGame.DrawTextLines("Easy", Color.Blue, Color.Pink, GameResources.GameFont("HighScoreDifficulty"), FontAlignment.AlignCenter, btnStartX, btnStartY, btnWidth, btnHeight);
+
+            if (_difficulty == AIOption.Medium) SwinGame.DrawTextLines("Medium", Color.Pink, Color.Blue, GameResources.GameFont("HighScoreDifficulty"), FontAlignment.AlignCenter, btnStartX + btnWidth, btnStartY, btnWidth, btnHeight);
+            else SwinGame.DrawTextLines("Medium", Color.Blue, Color.Pink, GameResources.GameFont("HighScoreDifficulty"), FontAlignment.AlignCenter, btnStartX + btnWidth, btnStartY, btnWidth, btnHeight);
+
+            if (_difficulty == AIOption.Hard) SwinGame.DrawTextLines("Hard", Color.Pink, Color.Blue, GameResources.GameFont("HighScoreDifficulty"), FontAlignment.AlignCenter, btnStartX + btnWidth*2, btnStartY, btnWidth, btnHeight);
+            else SwinGame.DrawTextLines("Hard", Color.Blue, Color.Pink, GameResources.GameFont("HighScoreDifficulty"), FontAlignment.AlignCenter, btnStartX + btnWidth * 2, btnStartY, btnWidth, btnHeight);
+
+            if (_difficulty == AIOption.Challenge) SwinGame.DrawTextLines("Challenge", Color.Pink, Color.Blue, GameResources.GameFont("HighScoreDifficulty"), FontAlignment.AlignCenter, btnStartX + btnWidth * 3, btnStartY, btnWidth, btnHeight);
+            else SwinGame.DrawTextLines("Challenge", Color.Blue, Color.Pink, GameResources.GameFont("HighScoreDifficulty"), FontAlignment.AlignCenter, btnStartX + btnWidth * 3, btnStartY, btnWidth, btnHeight);
+
 
             // For all of the scores
             int i;
-            for (i = 0; i <= _Scores.Count - 1; i++)
+            for (i = 0; i <= _AllScores[_difficulty].Count - 1; i++)
             {
                 Score s;
 
-                s = _Scores[i];
+                s = _AllScores[_difficulty][i];
 
                 // for scores 1 - 9 use 01 - 09
                 if (i < 9)
@@ -152,8 +168,42 @@ namespace Battleship
         ///     ''' <remarks></remarks>
         public static void HandleHighScoreInput()
         {
-            if (SwinGame.MouseClicked(MouseButton.LeftButton) || SwinGame.KeyTyped(KeyCode.vk_ESCAPE) || SwinGame.KeyTyped(KeyCode.vk_RETURN))
+            if (SwinGame.KeyTyped(KeyCode.vk_ESCAPE) || SwinGame.KeyTyped(KeyCode.vk_RETURN))
                 GameController.EndCurrentState();
+
+            if (SwinGame.MouseClicked(MouseButton.LeftButton)) //if user clicked on another difficulty
+            {
+                if (IsMouseOverButton(AIOption.Easy)) _difficulty = AIOption.Easy;
+                else if (IsMouseOverButton(AIOption.Medium)) _difficulty = AIOption.Medium;
+                else if (IsMouseOverButton(AIOption.Hard)) _difficulty = AIOption.Hard;
+                else if (IsMouseOverButton(AIOption.Challenge)) _difficulty = AIOption.Challenge;
+            }
+
+        }
+
+        private static bool IsMouseOverButton(AIOption diff)
+        {
+            int btnX;
+            int btnY = btnStartY;
+
+            switch (diff)
+            {
+                case AIOption.Easy:
+                    btnX = btnStartX;
+                    break;
+                case AIOption.Medium:
+                    btnX = btnStartX + btnWidth * 1;
+                    break;
+                case AIOption.Hard:
+                    btnX = btnStartX + btnWidth * 2;
+                    break;
+                case AIOption.Challenge:
+                    btnX = btnStartX + btnWidth * 3;
+                    break;
+                default:
+                    return false;
+            }
+            return UtilityFunctions.IsMouseInRectangle(btnX, btnY, btnWidth, btnHeight);
         }
 
         /// <summary>
@@ -163,15 +213,14 @@ namespace Battleship
         ///     ''' <remarks>
         ///     ''' This verifies if the score is a highsSwinGame.
         ///     ''' </remarks>
-        public static void ReadHighScore(int value)
+        public static void ReadHighScore(int value, AIOption difficulty)
         {
             const int ENTRY_TOP = 500;
 
-            if (_Scores.Count == 0)
-                LoadScores();
+            LoadScores(); // load scores from file
 
             // if there is less than 10 records or if the current score is better than the last place score
-            if (_Scores.Count < 10 || value > _Scores[_Scores.Count - 1].Value)
+            if (_AllScores[difficulty].Count < 10 || value > _AllScores[AIOption.Easy][_AllScores[AIOption.Easy].Count - 1].Value)
             {
                 Score s = new Score();
                 s.Value = value;
@@ -196,16 +245,12 @@ namespace Battleship
 
                 s.Name = SwinGame.TextReadAsASCII();
 
-                //if (s.Name.Length < 3)
-                //    s.Name = s.Name + new string(System.Convert.ToChar(" "), 3 - s.Name.Length);
-                // we dont want 3 letters names anymore
-
                 //only delete last entry if score list is more than 10
-               if (_Scores.Count >= 10)
-                _Scores.RemoveAt(_Scores.Count - 1);
+                if (_AllScores[difficulty].Count >= 10)
+                    _AllScores[difficulty].RemoveAt(_AllScores[difficulty].Count - 1);
 
-                _Scores.Add(s);
-                _Scores.Sort();
+                _AllScores[difficulty].Add(s);
+                _AllScores[difficulty].Sort();
 
                 SaveScores(); // save score to file
 

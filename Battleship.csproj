@@ -72,6 +72,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="SwinGame">
       <HintPath>lib\SwinGame.dll</HintPath>
     </Reference>
@@ -82,6 +85,7 @@
     <None Include="lib\godly\libSGSDK.dylib" />
     <None Include="lib\mac\libSGSDK.dylib" />
     <None Include="lib\sdl13\libSGSDK.dylib" />
+    <None Include="packages.config" />
     <None Include="Resources\fonts\arial.ttf" />
     <None Include="Resources\fonts\cour.ttf" />
     <None Include="Resources\fonts\ffaccess.ttf" />

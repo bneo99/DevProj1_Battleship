@@ -27,7 +27,7 @@ namespace Battleship
             new string[] { "RETURN", "SURRENDER", "QUIT" },
             new string[] { "EASY", "MEDIUM", "HARD", "CHALLENGE"} };
 
-        private const int MENU_TOP = 575;
+        private const int MENU_TOP = 540;
         private const int MENU_LEFT = 30;
         private const int MENU_GAP = 0;
         private const int BUTTON_HEIGHT = 20;
@@ -38,7 +38,7 @@ namespace Battleship
 
         private const int MAIN_MENU = 0;
         private const int GAME_MENU = 1;
-        private const int SETUP_MENU = 2;
+        private const int DIFFICULTY_MENU = 2;
 
         private const int MAIN_MENU_PLAY_BUTTON = 0;
         private const int MAIN_MENU_HELP_BUTTON = 1;
@@ -46,12 +46,12 @@ namespace Battleship
         private const int MAIN_MENU_TOP_SCORES_BUTTON = 3;
         private const int MAIN_MENU_QUIT_BUTTON = 4;
 
-        private const int SETUP_MENU_EASY_BUTTON = 0;
-        private const int SETUP_MENU_MEDIUM_BUTTON = 1;
-        private const int SETUP_MENU_HARD_BUTTON = 2;
+        private const int DIFFICULTY_MENU_EASY_BUTTON = 0;
+        private const int DIFFICULTY_MENU_MEDIUM_BUTTON = 1;
+        private const int DIFFICULTY_MENU_HARD_BUTTON = 2;
         //CHALLENGE
-        private const int SETUP_MENU_CHALLENGE_BUTTON = 3;
-        private const int SETUP_MENU_EXIT_BUTTON = 4;
+        private const int DIFFICULTY_MENU_CHALLENGE_BUTTON = 3;
+        private const int DIFFICULTY_MENU_EXIT_BUTTON = 4;
 
         private const int GAME_MENU_RETURN_BUTTON = 0;
         private const int GAME_MENU_SURRENDER_BUTTON = 1;
@@ -76,7 +76,7 @@ namespace Battleship
                 _playMode = value;
             }
         }
-        
+
         /// <summary>
         ///     ''' Handles the processing of user input when the main menu is showing
         ///     ''' </summary>
@@ -88,10 +88,10 @@ namespace Battleship
         /// <summary>
         ///     ''' Handles the processing of user input when the main menu is showing
         ///     ''' </summary>
-        public static void HandleSetupMenuInput()
+        public static void HandleDifficultyMenuInput()
         {
             bool handled;
-            handled = HandleMenuInput(SETUP_MENU, 1, 1);
+            handled = HandleMenuInput(DIFFICULTY_MENU, 1, 1);
 
             if (!handled)
                 HandleMenuInput(MAIN_MENU, 0, 0);
@@ -119,7 +119,7 @@ namespace Battleship
         {
             if (SwinGame.KeyTyped(KeyCode.vk_ESCAPE))
             {
-                if(GameController.CurrentState != GameState.ViewingMainMenu) GameController.EndCurrentState(); //dont let escape quit game if in main menu
+                if (GameController.CurrentState != GameState.ViewingMainMenu) GameController.EndCurrentState(); //dont let escape quit game if in main menu
                 return true;
             }
 
@@ -169,7 +169,7 @@ namespace Battleship
         public static void DrawSettings()
         {
             DrawButtons(MAIN_MENU);
-            DrawButtons(SETUP_MENU, 1, 1);
+            DrawButtons(DIFFICULTY_MENU, 1, 1);
         }
 
         /// <summary>
@@ -201,18 +201,16 @@ namespace Battleship
 
             for (i = 0; i <= _menuStructure[menu].Length - 1; i++) // generate buttons based on number of elements in array
             {
-                if (i > 0) BUTTON_SEP = _menuStructure[menu][i-1].Length * 14 + 40; //last button width; i-1 coz first one ofc wont have a button before it
+                if (i > 0) BUTTON_SEP = _menuStructure[menu][i - 1].Length * 14 + 40; //last button width; i-1 coz first one ofc wont have a button before it
                 else BUTTON_SEP = 0;
 
                 BUTTON_WIDTH = _menuStructure[menu][i].Length * 14 + 40; // current button width
-            //ori: btnLeft = MENU_LEFT + BUTTON_SEP * (i + xOffset);
                 BUTTON_OFFSET += BUTTON_SEP; //add up last button width into offset
 
                 SwinGame.DrawTextLines(_menuStructure[menu][i], MENU_COLOR, Color.Black, GameResources.GameFont("Menu"), FontAlignment.AlignCenter, BUTTON_OFFSET + TEXT_OFFSET, btnTop + TEXT_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT);
 
-                //if (SwinGame.MouseDown(MouseButton.LeftButton) & UtilityFunctions.IsMouseInRectangle(BUTTON_OFFSET, btnTop, BUTTON_WIDTH, BUTTON_HEIGHT))
-                    if (SwinGame.MouseDown(MouseButton.LeftButton) & IsMouseOverMenu(menu, i, level, xOffset))
-                        SwinGame.DrawRectangle(HIGHLIGHT_COLOR, BUTTON_OFFSET, btnTop, BUTTON_WIDTH, BUTTON_HEIGHT);
+                if (SwinGame.MouseDown(MouseButton.LeftButton) & IsMouseOverMenu(menu, i, level, xOffset))
+                    SwinGame.DrawRectangle(HIGHLIGHT_COLOR, BUTTON_OFFSET, btnTop, BUTTON_WIDTH, BUTTON_HEIGHT);
             }
         }
 
@@ -255,7 +253,7 @@ namespace Battleship
                         break;
                     }
 
-                case SETUP_MENU:
+                case DIFFICULTY_MENU:
                     {
                         PerformSetupMenuAction(button);
                         break;
@@ -317,27 +315,27 @@ namespace Battleship
         {
             switch (button)
             {
-                case SETUP_MENU_EASY_BUTTON:
+                case DIFFICULTY_MENU_EASY_BUTTON:
                     {
                         GameController.SetDifficulty(AIOption.Easy);
                         _playMode = AIOption.Easy;
                         break;
                     }
 
-                case SETUP_MENU_MEDIUM_BUTTON:
+                case DIFFICULTY_MENU_MEDIUM_BUTTON:
                     {
                         GameController.SetDifficulty(AIOption.Medium);
                         _playMode = AIOption.Medium;
                         break;
                     }
 
-                case SETUP_MENU_HARD_BUTTON:
+                case DIFFICULTY_MENU_HARD_BUTTON:
                     {
                         GameController.SetDifficulty(AIOption.Hard);
                         _playMode = AIOption.Hard;
                         break;
                     }
-                case SETUP_MENU_CHALLENGE_BUTTON:
+                case DIFFICULTY_MENU_CHALLENGE_BUTTON:
                     {
                         GameController.SetDifficulty(AIOption.Challenge);
                         _playMode = AIOption.Challenge;
