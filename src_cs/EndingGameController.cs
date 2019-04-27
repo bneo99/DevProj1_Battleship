@@ -59,7 +59,7 @@ namespace Battleship
             if (SwinGame.MouseClicked(MouseButton.LeftButton) || SwinGame.KeyTyped(KeyCode.vk_RETURN) || SwinGame.KeyTyped(KeyCode.vk_ESCAPE))
             {
                 if (GameController.ComputerPlayer.IsDestroyed)
-                    HighScoreController.ReadHighScore(GameController.HumanPlayer.Score); //only go to score if win
+                    HighScoreController.ReadHighScore(GameController.HumanPlayer.Score, GameController.Difficulty); //only go to score if win
                 GameController.EndCurrentState(); //go back to menu after clicking
             }
         }

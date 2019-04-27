@@ -10,6 +10,9 @@ namespace Battleship
             NewFont("ArialLarge", "arial.ttf", 80);
             NewFont("Arial", "arial.ttf", 16);
             NewFont("Gameplay", "Gameplay.ttf",16);
+            NewFont("HighScoreTitle", "Gameplay.ttf", 26);
+            NewFont("HighScoreDifficulty", "Gameplay.ttf", 14);
+            NewFont("HighScore", "Gameplay.ttf", 16);
             NewFont("Courier", "cour.ttf", 18);
             NewFont("CourierSmall", "cour.ttf", 8);
             NewFont("Menu", "ffaccess.ttf", 14);

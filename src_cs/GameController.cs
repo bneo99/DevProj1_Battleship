@@ -36,6 +36,17 @@ namespace Battleship
         }
 
         /// <summary>
+        /// Gets difficulty of AI
+        /// </summary>
+        public static AIOption Difficulty
+        {
+            get
+            {
+                return _aiSetting;
+            }
+        }
+
+        /// <summary>
         ///     ''' Returns the human player.
         ///     ''' </summary>
         ///     ''' <value>the human player</value>
@@ -340,7 +351,7 @@ namespace Battleship
 
                 case GameState.AlteringSettings:
                     {
-                        MenuController.HandleSetupMenuInput();
+                        MenuController.HandleDifficultyMenuInput();
                         break;
                     }
 
