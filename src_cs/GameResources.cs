@@ -25,7 +25,7 @@ namespace Battleship
             NewImage("Help", "test1.jpeg");
             NewImage("Discovery", "discover.jpg");
             NewImage("Deploy", "deploy.jpg");
-            NewImage("Dead", "ded.png");
+            NewImage("Win", "win.png");
 
             // Deployment
             NewImage("LeftRightButton", "deploy_dir_button_horiz.png");
@@ -54,8 +54,8 @@ namespace Battleship
             NewSound("Sink", "sink1.wav");
             NewSound("Siren", "siren.wav");
             NewSound("Miss", "shotfired.wav");
-            NewSound("Winner", "winner.wav");
-            NewSound("Lose", "lose.wav");
+            NewSound("Winner", "win.wav");
+            NewSound("Lose", "dead.wav");
         }
 
         private static void LoadMusic()
@@ -160,7 +160,6 @@ namespace Battleship
         /// <summary>
         ///     ''' Shows the loading screen
         ///     ''' </summary>
-
         private static void ShowLoadingScreen()
         {
             _Background = SwinGame.LoadBitmap(SwinGame.PathToResource("SplashBack1.png", ResourceKind.BitmapResource));

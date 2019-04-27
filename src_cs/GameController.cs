@@ -217,7 +217,7 @@ namespace Battleship
                             SwinGame.RefreshScreen();
                         }
 
-                        if (HumanPlayer.IsDestroyed)
+                        if (HumanPlayer.IsDestroyed || BattleShipsGame._endGameNow)
                             Audio.PlaySoundEffect(GameResources.GameSound("Lose"));
                         else
                             Audio.PlaySoundEffect(GameResources.GameSound("Winner"));
