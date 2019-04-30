@@ -2,15 +2,15 @@
 using System.Collections;
 using SwinGameSDK;
 
-/// <summary>
-/// ''' The GameController is responsible for controlling the game,
-/// ''' managing user input, and displaying the current state of the
-/// ''' game.
-/// ''' </summary>
+/*
+The GameController is responsible for controlling the game,
+managing user input, and displaying the current state of the
+game.
+*/
 
 namespace Battleship
 {
-    internal class GameControllerChallengeMode
+    public class GameControllerChallengeMode
     {
         private static BattleShipsChallengeMode _theGame;
         private static PlayerChallengeMode _human;
