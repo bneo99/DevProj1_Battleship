@@ -40,34 +40,34 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="src_cs\DeploymentController.cs" />
-    <Compile Include="src_cs\DiscoveryController.cs" />
-    <Compile Include="src_cs\EndingGameController.cs" />
-    <Compile Include="src_cs\GameController.cs" />
-    <Compile Include="src_cs\GameLogic.cs" />
-    <Compile Include="src_cs\GameResources.cs" />
-    <Compile Include="src_cs\GameState.cs" />
-    <Compile Include="src_cs\HelpController.cs" />
-    <Compile Include="src_cs\HighScoreController.cs" />
-    <Compile Include="src_cs\MenuController.cs" />
-    <Compile Include="src_cs\UtilityFunctions.cs" />
-    <Compile Include="src_cs\Model\AIHardPlayer.cs" />
-    <Compile Include="src_cs\Model\AIHardPlayerCM.cs" />
-    <Compile Include="src_cs\Model\AIMediumPlayer.cs" />
-    <Compile Include="src_cs\Model\AIOption.cs" />
-    <Compile Include="src_cs\Model\AIPlayer.cs" />
-    <Compile Include="src_cs\Model\AttackResult.cs" />
-    <Compile Include="src_cs\Model\BattleShipsGame.cs" />
-    <Compile Include="src_cs\Model\Direction.cs" />
-    <Compile Include="src_cs\Model\ISeaGrid.cs" />
-    <Compile Include="src_cs\Model\Player.cs" />
-    <Compile Include="src_cs\Model\ResultOfAttack.cs" />
-    <Compile Include="src_cs\Model\SeaGrid.cs" />
-    <Compile Include="src_cs\Model\SeaGridAdapter.cs" />
-    <Compile Include="src_cs\Model\Ship.cs" />
-    <Compile Include="src_cs\Model\ShipName.cs" />
-    <Compile Include="src_cs\Model\Tile.cs" />
-    <Compile Include="src_cs\Model\TileView.cs" />
+    <Compile Include="src\DeploymentController.cs" />
+    <Compile Include="src\DiscoveryController.cs" />
+    <Compile Include="src\EndingGameController.cs" />
+    <Compile Include="src\GameController.cs" />
+    <Compile Include="src\GameLogic.cs" />
+    <Compile Include="src\GameResources.cs" />
+    <Compile Include="src\GameState.cs" />
+    <Compile Include="src\HelpController.cs" />
+    <Compile Include="src\HighScoreController.cs" />
+    <Compile Include="src\MenuController.cs" />
+    <Compile Include="src\UtilityFunctions.cs" />
+    <Compile Include="src\Model\AIHardPlayer.cs" />
+    <Compile Include="src\Model\AIHardPlayerCM.cs" />
+    <Compile Include="src\Model\AIMediumPlayer.cs" />
+    <Compile Include="src\Model\AIOption.cs" />
+    <Compile Include="src\Model\AIPlayer.cs" />
+    <Compile Include="src\Model\AttackResult.cs" />
+    <Compile Include="src\Model\BattleShipsGame.cs" />
+    <Compile Include="src\Model\Direction.cs" />
+    <Compile Include="src\Model\ISeaGrid.cs" />
+    <Compile Include="src\Model\Player.cs" />
+    <Compile Include="src\Model\ResultOfAttack.cs" />
+    <Compile Include="src\Model\SeaGrid.cs" />
+    <Compile Include="src\Model\SeaGridAdapter.cs" />
+    <Compile Include="src\Model\Ship.cs" />
+    <Compile Include="src\Model\ShipName.cs" />
+    <Compile Include="src\Model\Tile.cs" />
+    <Compile Include="src\Model\TileView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="lib\cygpath" />
