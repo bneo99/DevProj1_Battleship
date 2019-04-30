@@ -1,9 +1,32 @@
-﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+﻿<Properties StartupConfiguration="{BEBF04B0-10D8-435B-9EFB-2321287B2647}|Default">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench />
-  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="src_cs\GameResources.cs">
+    <Files>
+      <File FileName="src_cs\DeploymentController.cs" Line="2" Column="18" />
+      <File FileName="src_cs\HighScoreController.cs" Line="10" Column="18" />
+      <File FileName="src_cs\GameController.cs" Line="15" Column="49" />
+      <File FileName="src_cs\GameControllerChallengeMode.cs" Line="15" Column="44" />
+      <File FileName="src_cs\GameLogic.cs" Line="10" Column="55" />
+      <File FileName="src_cs\GameResources.cs" Line="172" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Battleship" expanded="True">
+            <Node name="Battleship" expanded="True" selected="True">
+              <Node name="References" expanded="True" />
+              <Node name="src_cs" expanded="True">
+                <Node name="Model" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Battleship PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>
