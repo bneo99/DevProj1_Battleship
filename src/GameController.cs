@@ -21,6 +21,10 @@ namespace Battleship
 
         private static AIOption _aiSetting;
 
+        // a boolean value to figure out is the music on (1) or off (0)
+        public static int _musicOn = 1;
+
+
         /// <summary>
         ///     ''' Returns the current state of the game, indicating which screen is
         ///     ''' currently being used
@@ -125,7 +129,6 @@ namespace Battleship
         /// <summary>
         ///     ''' Stops listening to the old game once a new game is started
         ///     ''' </summary>
-
         private static void EndGame()
         {
             // RemoveHandler _human.PlayerGrid.Changed, AddressOf GridChanged
@@ -296,7 +299,7 @@ namespace Battleship
         ///     ''' <param name="result">the result of the last
         ///     ''' attack</param>
         ///     ''' <remarks>Gets the AI to attack if the result switched
-        ///     ''' to the AI player.</remarks>
+        /// to the AI player.</remarks>
         private static void CheckAttackResult(AttackResult result)
         {
             switch (result.Value)
@@ -317,6 +320,43 @@ namespace Battleship
         }
 
         /// <summary>
+        /// Draws the Music button icon
+        /// </summary>
+        /// <remarks>To draw the music button icon to all controllers</remarks>
+        private static void DrawMusicButton()
+        {
+            //if music is on, turn icon to music enabled and vise versa
+            if (_musicOn == 1)
+            {
+                SwinGame.DrawBitmap(GameResources.GameImage("MusicEnabled"), 756, 6);
+                SwinGame.ResumeMusic();
+            }
+            else
+            {
+                SwinGame.DrawBitmap(GameResources.GameImage("MusicDisabled"), 756, 6);
+                SwinGame.PauseMusic();
+            }
+        }
+
+        /// <summary>
+        /// To handle the input of the music button
+        /// </summary>
+        /// <remarks>To allow the user to handle the input of the music button in all controllers</remarks>
+        private static void InputMusicButton()
+        {
+            if (SwinGame.MouseClicked(MouseButton.LeftButton))
+            {
+                if (UtilityFunctions.IsMouseInRectangle(756, 6, 32, 32))
+                {
+                    if (_musicOn == 0)
+                        _musicOn = 1;
+                    else
+                        _musicOn = 0;
+                }
+            }
+        }
+
+        /// <summary>
         ///     ''' Handles the user SwinGame.
         ///     ''' </summary>
         ///     ''' <remarks>
@@ -328,6 +368,8 @@ namespace Battleship
         {
             // Read incoming input events
             SwinGame.ProcessEvents();
+
+            InputMusicButton();
 
             switch (CurrentState)
             {
@@ -391,7 +433,9 @@ namespace Battleship
         ///     ''' </remarks>
         public static void DrawScreen()
         {
-            UtilityFunctions.DrawBackground();
+            UtilityFunctions.DrawBackground(ref MenuController.menuBackgroundName, ref MenuController.helpBackgroundName);
+
+            DrawMusicButton();
 
             switch (CurrentState)
             {
