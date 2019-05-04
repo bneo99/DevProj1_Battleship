@@ -33,6 +33,9 @@ namespace Battleship
             NewImage("SelectedShip", "deploy_button_hl.png");
             NewImage("PlayButton", "deploy_play_button.png");
             NewImage("RandomButton", "deploy_randomize_button.png");
+            NewImage("MusicEnabled", "music.png");
+            NewImage("MusicDisabled", "no_music.png");
+            NewImage("ImportButton", "import_button.png");
 
             // Ships
             int i;
@@ -107,7 +110,7 @@ namespace Battleship
             return _Music[music];
         }
 
-        private static Dictionary<string, Bitmap> _Images = new Dictionary<string, Bitmap>();
+        public static Dictionary<string, Bitmap> _Images = new Dictionary<string, Bitmap>();
         private static Dictionary<string, Font> _Fonts = new Dictionary<string, Font>();
         private static Dictionary<string, SoundEffect> _Sounds = new Dictionary<string, SoundEffect>();
         private static Dictionary<string, Music> _Music = new Dictionary<string, Music>();
@@ -273,7 +276,7 @@ namespace Battleship
         /// <param name="imageName">Image name</param>
         /// <param name="filename">Name of the file</param>
 
-        private static void NewImage(string imageName, string filename)
+        public static void NewImage(string imageName, string filename)
         {
             _Images.Add(imageName, SwinGame.LoadBitmap(SwinGame.PathToResource(filename, ResourceKind.BitmapResource)));
         }
@@ -374,6 +377,10 @@ namespace Battleship
             FreeImages();
             FreeMusic();
             FreeSounds();
+            if (GameResources._Images.ContainsKey("userPic0"))
+                System.IO.File.Delete((MenuController.newPath + "\\bin\\Debug\\Resources\\images\\userPic0.png"));
+            if (GameResources._Images.ContainsKey("userPic1"))
+                System.IO.File.Delete((MenuController.newPath + "\\bin\\Debug\\Resources\\images\\userPic1.png"));
             SwinGame.ProcessEvents();
         }
     }

@@ -1,9 +1,11 @@
 using SwinGameSDK;
+using System;
 
 namespace Battleship
 {
     public class GameLogic
     {
+        [STAThread]
         public static void Main()
         {
             // Opens a new Graphics Window
