@@ -433,7 +433,7 @@ namespace Battleship
         ///     ''' </remarks>
         public static void DrawScreen()
         {
-            UtilityFunctions.DrawBackground(ref MenuController.menuBackgroundName, ref MenuController.helpBackgroundName);
+            UtilityFunctions.DrawBackground();
 
             DrawMusicButton();
 

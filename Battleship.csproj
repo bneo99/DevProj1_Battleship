@@ -50,6 +50,7 @@
     <Compile Include="src\HelpController.cs" />
     <Compile Include="src\HighScoreController.cs" />
     <Compile Include="src\MenuController.cs" />
+    <Compile Include="src\UserTheme.cs" />
     <Compile Include="src\UtilityFunctions.cs" />
     <Compile Include="src\Model\AIHardPlayer.cs" />
     <Compile Include="src\Model\AIHardPlayerCM.cs" />
@@ -106,7 +107,10 @@
       <HintPath>packages\Newtonsoft.Json.12.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

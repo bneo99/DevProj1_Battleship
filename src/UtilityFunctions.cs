@@ -244,20 +244,20 @@ namespace Battleship
         /// <summary>
         ///     ''' Draws the background for the current state of the game
         ///     ''' </summary>
-        public static void DrawBackground(ref string Menu, ref string Help)
+        public static void DrawBackground()
         {
             switch (GameController.CurrentState)
             {
                 case GameState.ViewingMainMenu:
-                    SwinGame.DrawBitmap(GameResources.GameImage(Menu), 0, 0);
+                    SwinGame.DrawBitmap(GameResources.GameImage("Menu"), 0, 0);
                     break;
                 case GameState.ViewingHelpPage:
-                    SwinGame.DrawBitmap(GameResources.GameImage(Help), 0, 0);
+                    SwinGame.DrawBitmap(GameResources.GameImage("Help"), 0, 0);
                     break;
                 case GameState.ViewingGameMenu:
                 case GameState.AlteringSettings:
                 case GameState.ViewingHighScores:
-                    SwinGame.DrawBitmap(GameResources.GameImage(Menu), 0, 0);
+                    SwinGame.DrawBitmap(GameResources.GameImage("Menu"), 0, 0);
                     break;
                 case GameState.Discovering:
                     SwinGame.DrawBitmap(GameResources.GameImage("Discovery"), 0, 0);
