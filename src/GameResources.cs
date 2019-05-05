@@ -166,7 +166,12 @@ namespace Battleship
             if (UserTheme.IsThemeFileEmpty())
                 _Background = SwinGame.LoadBitmap(SwinGame.PathToResource("SplashBack1.png", ResourceKind.BitmapResource));
             else
-                _Background = SwinGame.LoadBitmap(SwinGame.PathToResource("SplashBack1.png", "Themes\\images"));
+            {
+                if (UserTheme.IsFileExist("images\\SplashBack1.png"))
+                    _Background = SwinGame.LoadBitmap(SwinGame.PathToResource("SplashBack1.png", "Themes\\images"));
+                else
+                    _Background = SwinGame.LoadBitmap(SwinGame.PathToResource("SplashBack1.png", ResourceKind.BitmapResource));
+            }
             SwinGame.DrawBitmap(_Background, 0, 0);
             SwinGame.RefreshScreen();
             SwinGame.ProcessEvents();
@@ -182,12 +187,30 @@ namespace Battleship
             }
             else
             {
-                _Animation = SwinGame.LoadBitmap(SwinGame.PathToResource("SwinGameAni1.jpg", "Themes\\images"));
-                _LoadingFont = SwinGame.LoadFont(SwinGame.PathToResource("arial.ttf", "Themes\\fonts"), 12);
-                _StartSound = Audio.LoadSoundEffect(SwinGame.PathToResource("SwinGameStart.ogg", "Themes\\sounds"));
+                if(UserTheme.IsFileExist("images\\SwinGameAni1.jpg"))
+                    _Animation = SwinGame.LoadBitmap(SwinGame.PathToResource("SwinGameAni1.jpg", "Themes\\images"));
+                else
+                    _Animation = SwinGame.LoadBitmap(SwinGame.PathToResource("SwinGameAni1.jpg", ResourceKind.BitmapResource));
 
-                _LoaderFull = SwinGame.LoadBitmap(SwinGame.PathToResource("loader_full.png", "Themes\\images"));
-                _LoaderEmpty = SwinGame.LoadBitmap(SwinGame.PathToResource("loader_empty.png", "Themes\\images"));
+                if (UserTheme.IsFileExist("fonts\\arial.ttf"))
+                    _LoadingFont = SwinGame.LoadFont(SwinGame.PathToResource("arial.ttf", "Themes\\fonts"), 12);
+                else
+                    _LoadingFont = SwinGame.LoadFont(SwinGame.PathToResource("arial.ttf", ResourceKind.FontResource), 12);
+
+                if (UserTheme.IsFileExist("sounds\\SwinGameStart.ogg"))
+                    _StartSound = Audio.LoadSoundEffect(SwinGame.PathToResource("SwinGameStart.ogg", "Themes\\sounds"));
+                else
+                    _StartSound = Audio.LoadSoundEffect(SwinGame.PathToResource("SwinGameStart.ogg", ResourceKind.SoundResource));
+
+                if (UserTheme.IsFileExist("images\\loader_full.png"))
+                    _LoaderFull = SwinGame.LoadBitmap(SwinGame.PathToResource("loader_full.png", "Themes\\images"));
+                else
+                    _LoaderFull = SwinGame.LoadBitmap(SwinGame.PathToResource("loader_full.png", ResourceKind.BitmapResource));
+
+                if (UserTheme.IsFileExist("images\\loader_empty.png"))
+                    _LoaderEmpty = SwinGame.LoadBitmap(SwinGame.PathToResource("loader_empty.png", "Themes\\images"));
+                else
+                    _LoaderEmpty = SwinGame.LoadBitmap(SwinGame.PathToResource("loader_empty.png", ResourceKind.BitmapResource));
             }
 
             PlaySwinGameIntro();
@@ -286,7 +309,10 @@ namespace Battleship
             }
             else
             {
-                _Fonts.Add(fontName, SwinGame.LoadFont(SwinGame.PathToResource(filename, "Themes\\fonts"), size));
+                if (UserTheme.IsFileExist("fonts\\" + filename))
+                    _Fonts.Add(fontName, SwinGame.LoadFont(SwinGame.PathToResource(filename, "Themes\\fonts"), size));
+                else
+                    _Fonts.Add(fontName, SwinGame.LoadFont(SwinGame.PathToResource(filename, ResourceKind.FontResource), size));
             }
         }
 
@@ -304,7 +330,10 @@ namespace Battleship
             }
             else
             {
-                _Images.Add(imageName, SwinGame.LoadBitmap(SwinGame.PathToResource(filename, "Themes\\images")));
+                if (UserTheme.IsFileExist("images\\" + filename))
+                    _Images.Add(imageName, SwinGame.LoadBitmap(SwinGame.PathToResource(filename, "Themes\\images")));
+                else
+                    _Images.Add(imageName, SwinGame.LoadBitmap(SwinGame.PathToResource(filename, ResourceKind.BitmapResource)));
             }
         }
 
@@ -323,7 +352,10 @@ namespace Battleship
             }
             else
             {
-                _Images.Add(imageName, SwinGame.LoadBitmap(SwinGame.PathToResource(fileName, "Themes\\images"), true, transColor));
+                if (UserTheme.IsFileExist("images\\" + fileName))
+                    _Images.Add(imageName, SwinGame.LoadBitmap(SwinGame.PathToResource(fileName, "Themes\\images"), true, transColor));
+                else
+                    _Images.Add(imageName, SwinGame.LoadBitmap(SwinGame.PathToResource(fileName, ResourceKind.BitmapResource), true, transColor));
             }
         }
 
@@ -350,7 +382,13 @@ namespace Battleship
             if (UserTheme.IsThemeFileEmpty())
                 _Sounds.Add(soundName, Audio.LoadSoundEffect(SwinGame.PathToResource(filename, ResourceKind.SoundResource)));
             else
-                _Sounds.Add(soundName, Audio.LoadSoundEffect(SwinGame.PathToResource(filename, "Themes\\sounds")));
+            {
+                if (UserTheme.IsFileExist("sounds\\" + filename))
+                    _Sounds.Add(soundName, Audio.LoadSoundEffect(SwinGame.PathToResource(filename, "Themes\\sounds")));
+                else
+                    _Sounds.Add(soundName, Audio.LoadSoundEffect(SwinGame.PathToResource(filename, ResourceKind.SoundResource)));
+            }
+
         }
 
         /// <summary>
@@ -364,7 +402,12 @@ namespace Battleship
             if (UserTheme.IsThemeFileEmpty())
                 _Music.Add(musicName, Audio.LoadMusic(SwinGame.PathToResource(filename, ResourceKind.SoundResource)));
             else
-                _Music.Add(musicName, Audio.LoadMusic(SwinGame.PathToResource(filename, "Themes\\sounds")));
+            {
+                if (UserTheme.IsFileExist("sounds\\" + filename))
+                    _Music.Add(musicName, Audio.LoadMusic(SwinGame.PathToResource(filename, "Themes\\sounds")));
+                else
+                    _Music.Add(musicName, Audio.LoadMusic(SwinGame.PathToResource(filename, ResourceKind.SoundResource)));
+            }
         }
 
         /// <summary>
