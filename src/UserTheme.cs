@@ -20,9 +20,7 @@ namespace Battleship
                 SwinGame.SetAppPath(newPath2);
             }
         }
-
-
-        [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
+        
         public static bool IsThemeFileEmpty()
         {
             var info = new DirectoryInfo(newPath2);
@@ -33,6 +31,11 @@ namespace Battleship
             }
 
             return true;
+        }
+
+        public static bool IsFileExist(string filenameEx)
+        {
+            return File.Exists(newPath2 + "\\" + filenameEx);
         }
     }
 }
