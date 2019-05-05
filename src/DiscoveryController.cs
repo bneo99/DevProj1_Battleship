@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using SwinGameSDK;
 
 /// <summary>
@@ -9,6 +10,9 @@ namespace Battleship
 {
     public static class DiscoveryController
     {
+        public static bool cheating = false;
+        private static List<KeyCode> keySequence = new List<KeyCode>();
+        private static KeyCode[] keysToCheck = { KeyCode.vk_c, KeyCode.vk_h, KeyCode.vk_e, KeyCode.vk_a, KeyCode.vk_t };
 
         /// <summary>
         ///     ''' Handles input during the discovery phase of the game.
@@ -24,6 +28,13 @@ namespace Battleship
 
             if (SwinGame.MouseClicked(MouseButton.LeftButton))
                 DoAttack();
+
+            foreach (KeyCode k in keysToCheck) // if the keys pressed is one of the char for the cheat word
+            {
+                if (keySequence.Count >= 5) keySequence.RemoveAt(0); // if there is more than 5 keys in the list, remove first one
+                if (SwinGame.KeyTyped(k)) keySequence.Add(k); // add the pressed key into the list
+            }
+            
         }
 
         /// <summary>
@@ -52,10 +63,24 @@ namespace Battleship
         ///     ''' </summary>s
         public static void DrawDiscovery()
         {
+            //start position to draw the text
             const int SCORES_LEFT = 172;
             const int SHOTS_TOP = 150;
             const int HITS_TOP = 200;
             const int SPLASH_TOP = 250;
+
+            //check if user inputed cheat code
+            if (keySequence.Count >= 5)
+            {
+                if (keySequence[0] == KeyCode.vk_c | keySequence[1] == KeyCode.vk_h | keySequence[2] == KeyCode.vk_e | keySequence[3] == KeyCode.vk_a | keySequence[4] == KeyCode.vk_t)
+                    if (!cheating) cheating = true;
+            }
+
+            //check if cheat is enabled
+            if (cheating)
+            {
+                UtilityFunctions.DrawField(GameController.ComputerPlayer.PlayerGrid, GameController.ComputerPlayer, true);
+            }
 
             if ((SwinGame.KeyDown(KeyCode.vk_LSHIFT) | SwinGame.KeyDown(KeyCode.vk_RSHIFT)) & SwinGame.KeyDown(KeyCode.vk_c))
                 UtilityFunctions.DrawField(GameController.HumanPlayer.EnemyGrid, GameController.ComputerPlayer, true);
