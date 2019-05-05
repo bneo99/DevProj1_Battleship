@@ -48,6 +48,7 @@ namespace Battleship
             }
             else
                 SwinGame.DrawBitmap(GameResources.GameImage("Win"), 0, 0);
+            DiscoveryController.cheating = false; // undo cheat
         }
 
         /// <summary>
