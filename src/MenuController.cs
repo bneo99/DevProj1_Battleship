@@ -2,7 +2,6 @@ using SwinGameSDK;
 using System;
 using System.Windows.Forms;
 using System.IO;
-using System.Security.Permissions;
 
 /// <summary>
 /// ''' The menu controller handles the drawing and user interactions
@@ -28,8 +27,6 @@ namespace Battleship
         /// <summary>
         /// Public variables string to allow users to change the filename that is to be used in the UtitlityFunctions.DrawBackground()
         /// </summary>
-        public static string menuBackgroundName = "Menu";
-        public static string helpBackgroundName = "Help";
 
         /// <summary>
         ///     ''' The menu structure for the game.
@@ -91,78 +88,6 @@ namespace Battleship
                 _playMode = value;
             }
         }
-
-
-        /// <summary>
-        /// Added a watcher to detect new pictures in that file
-        /// </summary>
-        [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
-        private static void DetectNewFile()
-        {
-            string path = Directory.GetCurrentDirectory();
-            string newPath2;
-            
-            //debug
-            newPath2 = path.Substring(0, (path.Length - 10)) + "\\bin\\Debug\\Resources\\images"; //"\\Resources\\images";
-
-            // A FileSystemWatcher Object is created with the parameter of the path
-            FileSystemWatcher watcher = new FileSystemWatcher(newPath2);
-
-            // Watch for changes of lastwrite items
-            watcher.NotifyFilter = NotifyFilters.LastWrite;
-
-            // A message to notify programmers that it is working as expected
-            Console.WriteLine("Detecting {0}.", newPath2);
-
-            // Watch all type of files.
-            watcher.Filter = "*";
-
-            // Add event handlers.
-            watcher.Changed += Watcher_Changed;
-
-            // Enable to allow events to pop out
-            watcher.EnableRaisingEvents = true;
-        }
-
-        /// <summary>
-        /// Allow something to happen after knowing that there is a new file
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">FileSystemEventArgs</param>
-        private static void Watcher_Changed(object sender, FileSystemEventArgs e)
-        {   
-            Console.WriteLine($"File: {e.FullPath} {e.ChangeType}");
-
-            string newName;
-            newName = e.Name.Substring(0, e.Name.Length - 4);
-
-            // If there is no such image name in the GameResources file, create a NewImage to GameResources and to be used for the background image
-            try
-            {
-                if (!(GameResources._Images.ContainsKey(newName)))
-                {
-                    if (newName == "userPic0")
-                    {
-                        GameResources.NewImage(newName, e.Name);
-                        menuBackgroundName = newName;
-                    }
-                    else if (newName == "userPic1")
-                    {
-                        GameResources.NewImage(newName, e.Name);
-                        helpBackgroundName = newName;
-                    }
-
-                    SwinGame.Delay(1000);
-                    SwinGame.ClearScreen();
-                    SwinGame.RefreshScreen();
-                }
-            }
-            catch (InvalidCastException eer)
-            {
-                throw new Exception("Error: {0}", eer);
-            }
-        }
-
 
         /// <summary>
         ///     ''' Handles the processing of user input when the main menu is showing
@@ -227,60 +152,8 @@ namespace Battleship
                     // none clicked - so end this sub menu
                     GameController.EndCurrentState();
             }
-
-            if (SwinGame.MouseClicked(MouseButton.LeftButton))
-            {
-                if (UtilityFunctions.IsMouseInRectangle(720, 563, 65, 31))
-                {
-                    //string path = Directory.GetCurrentDirectory();
-                    //string newPath;
-
-                    //debug
-                    //Console.WriteLine("The current directory is {0}", path);
-                    //newPath = path.Substring(0, (path.Length - 10));
-                    //debug
-                    //Console.WriteLine("The current directory is {0}", newPath + "\\Resources\\images\\userPic" + picNum + ".png");
-
-                    OpenFileDialog open = new OpenFileDialog();
-
-                    open.Filter = "Image Files (*.png;*.jpg)|*.png;*.jpg|All Files(*.*)|*.*";
-                    open.FilterIndex = 1;
-                    open.Multiselect = true;
-
-                    if (open.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    {
-                        DetectNewFile();
-
-                        //try
-                        foreach (string file in open.FileNames)
-                        {
-                            if (open.CheckFileExists)
-                            {
-                                try
-                                {
-                                    System.IO.File.Copy(file, (newPath + "\\bin\\Debug\\Resources\\images\\userPic" + picNum + ".png"));
-                                    Console.WriteLine("Copy Success");
-                                    picNum++;
-                                }
-                                catch (InvalidCastException e)
-                                {
-                                    throw new Exception("Error: {0}", e);
-                                }
-                            }
-                        }
-
-
-                        /*if (open.CheckFileExists)
-                        {
-                            System.IO.File.Copy(open.FileName, (newPath + "\\bin\\Debug\\Resources\\images\\userPic" + picNum + ".png"));
-                            Console.WriteLine("Success");
-                            //picNum++;
-                        }*/
-                    }
-                }
-            }
-
-                    return false;
+            
+            return false;
         }
 
         /// <summary>
@@ -351,8 +224,6 @@ namespace Battleship
                 if (SwinGame.MouseDown(MouseButton.LeftButton) & IsMouseOverMenu(menu, i, level, xOffset))
                     SwinGame.DrawRectangle(HIGHLIGHT_COLOR, BUTTON_OFFSET, btnTop, BUTTON_WIDTH, BUTTON_HEIGHT);
             }
-
-            SwinGame.DrawBitmap(GameResources.GameImage("ImportButton"), 720, 563);
         }
 
         /// <summary>

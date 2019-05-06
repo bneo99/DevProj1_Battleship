@@ -239,7 +239,7 @@ namespace Battleship
                 {
                     SwinGame.ProcessEvents();
 
-                    UtilityFunctions.DrawBackground(ref MenuController.menuBackgroundName, ref MenuController.helpBackgroundName);
+                    UtilityFunctions.DrawBackground();
                     DrawHighScores();
                     SwinGame.DrawText("Name: ", Color.Green, GameResources.GameFont(HighScoreFont), SCORES_LEFT, ENTRY_TOP);
                     SwinGame.RefreshScreen();
