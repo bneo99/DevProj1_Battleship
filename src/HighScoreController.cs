@@ -217,10 +217,12 @@ namespace Battleship
         {
             const int ENTRY_TOP = 500;
 
+            difficulty = GameController.Difficulty; // set to display the difficulty being played
+
             LoadScores(); // load scores from file
 
             // if there is less than 10 records or if the current score is better than the last place score
-            if (_AllScores[difficulty].Count < 10 || value > _AllScores[AIOption.Easy][_AllScores[AIOption.Easy].Count - 1].Value)
+            if (_AllScores[difficulty].Count < 10 || value > _AllScores[difficulty][_AllScores[difficulty].Count - 1].Value)
             {
                 Score s = new Score();
                 s.Value = value;
