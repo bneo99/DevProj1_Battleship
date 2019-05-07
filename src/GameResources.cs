@@ -159,11 +159,11 @@ namespace Battleship
         }
 
         /// <summary>
-        ///     ''' Shows the loading screen
-        ///     ''' </summary>
+        /// Shows the loading screen
+        /// </summary>
         private static void ShowLoadingScreen()
         {
-            if (UserTheme.IsThemeFileEmpty())
+            if (UserTheme.IsThemeFolderEmpty())
                 _Background = SwinGame.LoadBitmap(SwinGame.PathToResource("SplashBack1.png", ResourceKind.BitmapResource));
             else
             {
@@ -176,7 +176,8 @@ namespace Battleship
             SwinGame.RefreshScreen();
             SwinGame.ProcessEvents();
 
-            if (UserTheme.IsThemeFileEmpty())
+            //if theme folder is empty, use the original resources available
+            if (UserTheme.IsThemeFolderEmpty())
             {
                 _Animation = SwinGame.LoadBitmap(SwinGame.PathToResource("SwinGameAni1.jpg", ResourceKind.BitmapResource));
                 _LoadingFont = SwinGame.LoadFont(SwinGame.PathToResource("arial.ttf", ResourceKind.FontResource), 12);
@@ -303,7 +304,8 @@ namespace Battleship
 
         private static void NewFont(string fontName, string filename, int size)
         {
-            if (UserTheme.IsThemeFileEmpty())
+            //if theme folder is empty, use the original resources available
+            if (UserTheme.IsThemeFolderEmpty())
             {
                 _Fonts.Add(fontName, SwinGame.LoadFont(SwinGame.PathToResource(filename, ResourceKind.FontResource), size));
             }
@@ -324,7 +326,8 @@ namespace Battleship
 
         public static void NewImage(string imageName, string filename)
         {
-            if (UserTheme.IsThemeFileEmpty())
+            //if theme folder is empty, use the original resources available
+            if (UserTheme.IsThemeFolderEmpty())
             {
                 _Images.Add(imageName, SwinGame.LoadBitmap(SwinGame.PathToResource(filename, ResourceKind.BitmapResource)));
             }
@@ -346,7 +349,8 @@ namespace Battleship
 
         private static void NewTransparentColorImage(string imageName, string fileName, Color transColor)
         {
-            if (UserTheme.IsThemeFileEmpty())
+            //if theme folder is empty, use the original resources available
+            if (UserTheme.IsThemeFolderEmpty())
             {
                 _Images.Add(imageName, SwinGame.LoadBitmap(SwinGame.PathToResource(fileName, ResourceKind.BitmapResource), true, transColor));
             }
@@ -379,7 +383,8 @@ namespace Battleship
 
         private static void NewSound(string soundName, string filename)
         {
-            if (UserTheme.IsThemeFileEmpty())
+            //if theme folder is empty, use the original resources available
+            if (UserTheme.IsThemeFolderEmpty())
                 _Sounds.Add(soundName, Audio.LoadSoundEffect(SwinGame.PathToResource(filename, ResourceKind.SoundResource)));
             else
             {
@@ -399,7 +404,8 @@ namespace Battleship
 
         private static void NewMusic(string musicName, string filename)
         {
-            if (UserTheme.IsThemeFileEmpty())
+            //if theme folder is empty, use the original resources available
+            if (UserTheme.IsThemeFolderEmpty())
                 _Music.Add(musicName, Audio.LoadMusic(SwinGame.PathToResource(filename, ResourceKind.SoundResource)));
             else
             {
