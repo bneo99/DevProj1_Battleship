@@ -11,7 +11,7 @@ using System.IO;
 
 namespace Battleship
 {
-    public static class MenuController
+    public class MenuController
     {
         /// <summary>
         /// A public variable to check the current gameMode
@@ -357,6 +357,46 @@ namespace Battleship
             // Always end state - handles exit button as well
             GameController.EndCurrentState();
         }
+
+        public AIOption PerformSetupMenuActionTest(int button)
+        {
+            AIOption option = AIOption.Easy;
+
+            switch (button)
+            {
+                case DIFFICULTY_MENU_EASY_BUTTON:
+                    {
+                        GameController.SetDifficulty(AIOption.Easy);
+                        option = GameController.Difficulty;
+                        return option;
+                    }
+
+                case DIFFICULTY_MENU_MEDIUM_BUTTON:
+                    {
+                        GameController.SetDifficulty(AIOption.Medium);
+                        option = GameController.Difficulty;
+                        return option;
+                    }
+
+                case DIFFICULTY_MENU_HARD_BUTTON:
+                    {
+                        GameController.SetDifficulty(AIOption.Hard);
+                        option = GameController.Difficulty;
+                        return option;
+                    }
+                case DIFFICULTY_MENU_CHALLENGE_BUTTON:
+                    {
+                        GameController.SetDifficulty(AIOption.Challenge);
+                        option = GameController.Difficulty;
+                        return option;
+                    }
+            }
+            // Always end state - handles exit button as well
+            GameController.EndCurrentState();
+
+            return option;
+        }
+
 
         /// <summary>
         ///     ''' The game menu was clicked, perform the button's action.
