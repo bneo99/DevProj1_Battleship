@@ -80,7 +80,6 @@
     <Compile Include="src\Model\TileView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="lib\cygpath" />
     <None Include="lib\SwinGame.dll" />
     <None Include="lib\SwinGame.dll.mdb" />

@@ -8,7 +8,7 @@ using SwinGameSDK;
 
 namespace Battleship
 {
-    public static class DeploymentController
+    public class DeploymentController
     {
         private const int SHIPS_TOP = 98;
         private const int SHIPS_LEFT = 20;
@@ -76,6 +76,11 @@ namespace Battleship
             }
         }
 
+        public static void DoDeployClick()
+        {
+            DoDeployClick(SwinGame.MousePosition());
+        }
+
         /// <summary>
         ///     ''' The user has clicked somewhere on the screen, check if its is a deployment and deploy
         ///     ''' the current ship if that is the case.
@@ -84,25 +89,21 @@ namespace Battleship
         ///     ''' If the click is in the grid it deploys to the selected location
         ///     ''' with the indicated direction
         ///     ''' </remarks>
-        private static void DoDeployClick()
-        {
-            Point2D mouse;
-
-            mouse = SwinGame.MousePosition();
+        public static int[] DoDeployClick(Point2D mouse) {
 
             // Calculate the row/col clicked
-            int row, col;
-            row = Convert.ToInt32(Math.Floor((mouse.Y - UtilityFunctions.FIELD_TOP) / (double)(UtilityFunctions.CELL_HEIGHT + UtilityFunctions.CELL_GAP)));
-            col = Convert.ToInt32(Math.Floor((mouse.X - UtilityFunctions.FIELD_LEFT) / (double)(UtilityFunctions.CELL_WIDTH + UtilityFunctions.CELL_GAP)));
+            int[] coord = new int[2];
+            coord[0] = Convert.ToInt32(Math.Floor((mouse.Y - UtilityFunctions.FIELD_TOP) / (double)(UtilityFunctions.CELL_HEIGHT + UtilityFunctions.CELL_GAP)));
+            coord[1] = Convert.ToInt32(Math.Floor((mouse.X - UtilityFunctions.FIELD_LEFT) / (double)(UtilityFunctions.CELL_WIDTH + UtilityFunctions.CELL_GAP)));
 
-            if (row >= 0 & row < GameController.HumanPlayer.PlayerGrid.Height)
+            if (coord[0] >= 0 & coord[0] < GameController.HumanPlayer.PlayerGrid.Height)
             {
-                if (col >= 0 & col < GameController.HumanPlayer.PlayerGrid.Width)
+                if (coord[1] >= 0 & coord[1] < GameController.HumanPlayer.PlayerGrid.Width)
                 {
                     // if in the area try to deploy
                     try
                     {
-                        GameController.HumanPlayer.PlayerGrid.MoveShip(row, col, _selectedShip, _currentDirection);
+                        GameController.HumanPlayer.PlayerGrid.MoveShip(coord[0], coord[1], _selectedShip, _currentDirection);
                     }
                     catch (Exception ex)
                     {
@@ -111,6 +112,21 @@ namespace Battleship
                     }
                 }
             }
+
+            return coord;
+        }
+
+        public int[] DoDeployClickTest(Point2D mouse)
+        {
+
+            // Calculate the row/col clicked
+            int[] coord = new int[2];
+            coord[0] = Convert.ToInt32(Math.Floor((mouse.Y) / (double)(UtilityFunctions.CELL_HEIGHT + UtilityFunctions.CELL_GAP)));
+            coord[0] = Convert.ToInt32(Math.Floor((mouse.Y - UtilityFunctions.FIELD_TOP) / (double)(UtilityFunctions.CELL_HEIGHT + UtilityFunctions.CELL_GAP)));
+
+            coord[1] = Convert.ToInt32(Math.Floor((mouse.X - UtilityFunctions.FIELD_LEFT) / (double)(UtilityFunctions.CELL_WIDTH + UtilityFunctions.CELL_GAP)));
+
+            return coord;
         }
 
         /// <summary>
